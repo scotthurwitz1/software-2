@@ -1,6 +1,8 @@
 package Controller;
 
+import Helper.util;
 import dao.UserQuery;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.ZoneId;
@@ -13,8 +15,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import Helper.Switcher;
 
 public class LoginController implements Initializable {
+    
+    Switcher switcher = new Switcher();
 
     @FXML
     private Label locationLbl;
@@ -38,8 +43,11 @@ public class LoginController implements Initializable {
     private Button loginBtn;
     
     @FXML
-    void onActionLoginBtn(ActionEvent event) throws SQLException {   
-        UserQuery.selectLoginCreds(usernameTxt.getText(), passwordTxt.getText());
+    void onActionLoginBtn(ActionEvent event) throws SQLException, IOException {   
+        if (UserQuery.selectLoginCreds(usernameTxt.getText(), passwordTxt.getText()))
+        {
+            switcher.screen("/View/MainMenu.fxml", event);
+        }
     }
 
     @FXML
