@@ -4,6 +4,7 @@
  */
 package dbclientappv4;
 
+import Helper.util;
 import dao.JDBC;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -22,10 +23,11 @@ public class DBClientAppV4 extends Application {
      */
     public static void main(String[] args) {
         
-//        JDBC.openConnection();
+        JDBC.openConnection();
         launch(args);
         
-//        JDBC.closeConnection();
+        
+        JDBC.closeConnection();
         
     }
 
