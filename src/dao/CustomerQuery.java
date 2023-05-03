@@ -4,18 +4,23 @@
  */
 package dao;
 
-import Helper.util;
+import Model.Customer;
+import Model.Database;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Locale;
+import java.util.MissingResourceException;
+import java.util.ResourceBundle;
+import javafx.collections.ObservableList;
 
 /**
  *
  * @author scott
  */
-public abstract class UserQuery {
+public class CustomerQuery {
     
-//    public static int insert(String fruitName, int colorId) throws SQLException {
+    //    public static int insert(String fruitName, int colorId) throws SQLException {
 //
 //        String sql = "INSERT INTO FRUITS (Fruit_Name, Color_ID) VALUES(?, ?)";
 //        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
@@ -70,24 +75,41 @@ public abstract class UserQuery {
 //    }
 //    
 
-
-public static boolean selectLoginCreds(String userId, String password) throws SQLException {
-        String sql = "SELECT * FROM USERS WHERE USER_NAME = ? AND PASSWORD = ?";
+//        public static void select(int colorId) throws SQLException {
+//        String sql = "SELECT * FROM CUSTOMERS";
+//        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+//        ResultSet rs = ps.executeQuery();
+//        
+//        while(rs.next()){
+//            
+//            
+//            
+//        }
+//    }
+    
+    public static void customersQuery() throws SQLException 
+    {
+        
+        String sql = "SELECT customers.Customer_ID, customers.Customer_Name, customers.Address, "
+                + "customers.Postal_code, customers.Phone, customers.Division_ID, first_level_divisions.Division "
+                + "FROM customers INNER JOIN first_level_divisions ON customers.Division_ID = "
+                + "first_level_divisions.Division_ID";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-        ps.setString(1, userId);
-        ps.setString(2, password);
         ResultSet rs = ps.executeQuery();
-        if (!rs.isBeforeFirst()) 
-            {    
-               util.Alert("Incorrect username or password");
-               return false;
-            } 
-        else 
-            {
-                System.out.println("User found");
-                return true;
-            }
+        
+        while (rs.next()){
+            int id = rs.getInt("Customer_ID");
+            String name = rs.getString("Customer_Name");
+            String address = rs.getString("Address");
+            String postalCode = rs.getString("Postal_Code");
+            String phone = rs.getString("Phone");
+            int divisionId = rs.getInt("Division_ID");
+            String divisionName = rs.getString("Division");
+            
+            Customer customer = new Customer(id, name, address, postalCode, phone, divisionId, divisionName);
+            Database.addCustomer(customer);
         }
-
+        
+    }
+    
 }
-

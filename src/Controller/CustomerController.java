@@ -4,8 +4,15 @@
  */
 package Controller;
 
+import Model.Customer;
+import Model.Database;
+import static dao.CustomerQuery.customersQuery;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,6 +21,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 /**
  * FXML Controller class
@@ -44,34 +52,34 @@ public class CustomerController implements Initializable {
     private Button exitBtn;
 
     @FXML
-    private TableColumn<?, ?> firstCol;
+    private TableColumn<Customer, String> firstCol;
 
     @FXML
-    private TableColumn<?, ?> idCol;
+    private TableColumn<Customer, Integer> idCol;
 
     @FXML
     private TextField idTxt;
 
     @FXML
-    private TableColumn<?, ?> nameCol;
+    private TableColumn<Customer, String> nameCol;
 
     @FXML
     private TextField nameTxt;
 
     @FXML
-    private TableColumn<?, ?> phoneCol;
+    private TableColumn<Customer, String> phoneCol;
 
     @FXML
     private TextField phoneTxt;
 
     @FXML
-    private TableColumn<?, ?> postalCol;
+    private TableColumn<Customer, String> postalCol;
 
     @FXML
     private TextField postalTxt;
 
     @FXML
-    private TableView<?> recordsTbl;
+    private TableView<Customer> recordsTbl;
 
     @FXML
     private Button saveBtn;
@@ -119,7 +127,26 @@ public class CustomerController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        try {
+            customersQuery();
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        System.out.println(Database.getAllCustomers());
+        
+        recordsTbl.setItems(Database.getAllCustomers());
+        
+        idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        addressCol.setCellValueFactory(new PropertyValueFactory<>("address"));
+        postalCol.setCellValueFactory(new PropertyValueFactory<>("postalCode"));
+        phoneCol.setCellValueFactory(new PropertyValueFactory<>("phone"));
+        firstCol.setCellValueFactory(new PropertyValueFactory<>("divisionName"));
+        
+        
+        
+        
     }    
     
 }

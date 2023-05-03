@@ -4,9 +4,11 @@
  */
 package dbclientappv4;
 
-import Helper.util;
+import Model.Database;
 import dao.JDBC;
+import java.sql.SQLException;
 import javafx.application.Application;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -21,12 +23,12 @@ public class DBClientAppV4 extends Application {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         
         JDBC.openConnection();
         launch(args);
-        
-        
+//        ObservableList<ObservableList> trial = dbToArray("customers");
+//        System.out.println(trial);
         JDBC.closeConnection();
         
     }

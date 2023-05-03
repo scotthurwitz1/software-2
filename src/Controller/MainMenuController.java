@@ -4,6 +4,8 @@
  */
 package Controller;
 
+import Helper.Switcher;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
@@ -17,6 +19,8 @@ import javafx.scene.control.Button;
  * @author scott
  */
 public class MainMenuController implements Initializable {
+    
+    Switcher switcher = new Switcher();
     
     @FXML
     private Button appBtn;
@@ -33,7 +37,9 @@ public class MainMenuController implements Initializable {
     }
 
     @FXML
-    void onActionCustBtn(ActionEvent event) {
+    void onActionCustBtn(ActionEvent event) throws IOException {
+        
+        switcher.screen("/View/Customer.fxml", event);
 
     }
 

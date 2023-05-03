@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 
 
-<AnchorPane id="AnchorPane" prefHeight="812.0" prefWidth="1053.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/19" fx:controller="Controller.CreateCustomerController">
+<AnchorPane id="AnchorPane" prefHeight="812.0" prefWidth="1053.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/19" fx:controller="Controller.CustomerController">
    <children>
       <Label layoutX="38.0" layoutY="31.0" text="Customer Records" />
       <TableView fx:id="recordsTbl" layoutX="38.0" layoutY="93.0" prefHeight="385.0" prefWidth="922.0">

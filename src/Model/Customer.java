@@ -11,8 +11,8 @@ import java.time.OffsetDateTime;
  * @author scott
  */
 public class Customer {
-    private int customerId;
-    private String customerName;
+    private int id;
+    private String name;
     private String address;
     private String postalCode;
     private String phone;
@@ -20,31 +20,32 @@ public class Customer {
     private String createdBy;
     private OffsetDateTime lastUpdate;
     private String lastUpdatedBy;
+    private int divisionId;
+    private String divisionName;
 
-    public Customer(int customerId, String customerName, String address, String postalCode, String phone, OffsetDateTime createDate, String createdBy, OffsetDateTime lastUpdate, String lastUpdatedBy) {
-        this.customerId = customerId;
-        this.customerName = customerName;
+    public Customer(int customerId, String customerName, String address, String postalCode, String phone, int divisionId, String divisionName) {
+        this.id = customerId;
+        this.name = customerName;
         this.address = address;
         this.postalCode = postalCode;
         this.phone = phone;
-        this.createDate = createDate;
-        this.createdBy = createdBy;
-        this.lastUpdate = lastUpdate;
-        this.lastUpdatedBy = lastUpdatedBy;
+        this.divisionId = divisionId;
+        this.divisionName = divisionName;
+
     }
 
     /**
-     * @return the customerId
+     * @return the id
      */
-    public int getCustomerId() {
-        return customerId;
+    public int getId() {
+        return id;
     }
 
     /**
-     * @return the customerName
+     * @return the name
      */
-    public String getCustomerName() {
-        return customerName;
+    public String getName() {
+        return name;
     }
 
     /**
@@ -69,45 +70,24 @@ public class Customer {
     }
 
     /**
-     * @return the createDate
+     * @return the divisionName
      */
-    public OffsetDateTime getCreateDate() {
-        return createDate;
+    public String getDivisionName() {
+        return divisionName;
     }
 
     /**
-     * @return the createdBy
+     * @param id the id to set
      */
-    public String getCreatedBy() {
-        return createdBy;
+    public void setId(int id) {
+        this.id = id;
     }
 
     /**
-     * @return the lastUpdate
+     * @param name the name to set
      */
-    public OffsetDateTime getLastUpdate() {
-        return lastUpdate;
-    }
-
-    /**
-     * @return the lastUpdatedBy
-     */
-    public String getLastUpdatedBy() {
-        return lastUpdatedBy;
-    }
-
-    /**
-     * @param customerId the customerId to set
-     */
-    public void setCustomerId(int customerId) {
-        this.customerId = customerId;
-    }
-
-    /**
-     * @param customerName the customerName to set
-     */
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     /**
@@ -132,31 +112,11 @@ public class Customer {
     }
 
     /**
-     * @param createDate the createDate to set
+     * @param divisionName the divisionName to set
      */
-    public void setCreateDate(OffsetDateTime createDate) {
-        this.createDate = createDate;
+    public void setDivisionName(String divisionName) {
+        this.divisionName = divisionName;
     }
 
-    /**
-     * @param createdBy the createdBy to set
-     */
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
-    }
-
-    /**
-     * @param lastUpdate the lastUpdate to set
-     */
-    public void setLastUpdate(OffsetDateTime lastUpdate) {
-        this.lastUpdate = lastUpdate;
-    }
-
-    /**
-     * @param lastUpdatedBy the lastUpdatedBy to set
-     */
-    public void setLastUpdatedBy(String lastUpdatedBy) {
-        this.lastUpdatedBy = lastUpdatedBy;
-    }
     
 }

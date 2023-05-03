@@ -1,7 +1,7 @@
 package Controller;
 
 import Helper.util;
-import dao.UserQuery;
+import dao.LoginQuery;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -44,7 +44,7 @@ public class LoginController implements Initializable {
     
     @FXML
     void onActionLoginBtn(ActionEvent event) throws SQLException, IOException {   
-        if (UserQuery.selectLoginCreds(usernameTxt.getText(), passwordTxt.getText()))
+        if (LoginQuery.selectLoginCreds( usernameTxt.getText(), passwordTxt.getText()))
         {
             switcher.screen("/View/MainMenu.fxml", event);
         }

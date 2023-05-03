@@ -32,6 +32,14 @@ public abstract class util {
         alert.showAndWait();
     }
     
+    public static void alertFR(String text)
+    {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Message d'Alerte");
+        alert.setContentText(text);
+        alert.showAndWait();
+    }
+    
     public static void timeZone()
     {
         System.out.println(ZoneId.systemDefault());
@@ -63,7 +71,7 @@ public abstract class util {
         System.out.println("UTC to User Time: " + myZDT);
 
     }
-    
+   
     
     
     
