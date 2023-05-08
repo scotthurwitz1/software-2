@@ -4,6 +4,7 @@
  */
 package dbclientappv4;
 
+import static Helper.util.statesQuery;
 import Model.Database;
 import dao.JDBC;
 import java.sql.SQLException;
@@ -26,6 +27,9 @@ public class DBClientAppV4 extends Application {
     public static void main(String[] args) throws SQLException {
         
         JDBC.openConnection();
+        
+        statesQuery();
+        
         launch(args);
 //        ObservableList<ObservableList> trial = dbToArray("customers");
 //        System.out.println(trial);

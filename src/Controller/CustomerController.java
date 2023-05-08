@@ -4,6 +4,7 @@
  */
 package Controller;
 
+import Helper.util;
 import Model.Customer;
 import Model.Database;
 import static dao.CustomerQuery.customersQuery;
@@ -40,7 +41,7 @@ public class CustomerController implements Initializable {
     private TextField addressTxt;
 
     @FXML
-    private ComboBox<?> countryCombo;
+    private ComboBox<String> countryCombo;
 
     @FXML
     private Button deleteBtn;
@@ -85,7 +86,7 @@ public class CustomerController implements Initializable {
     private Button saveBtn;
 
     @FXML
-    private ComboBox<?> stateCombo;
+    private ComboBox<String> stateCombo;
 
     @FXML
     void onActionAddBtn(ActionEvent event) {
@@ -114,6 +115,14 @@ public class CustomerController implements Initializable {
 
     @FXML
     void onActionSaveBtn(ActionEvent event) {
+        
+//        String address = addressTxt.getText();
+//        String postal = postalTxt.getText();
+//        String name = nameTxt.getText();
+//        String phone = phoneTxt.getText();
+//        String country = 
+        
+        
 
     }
 
@@ -127,6 +136,12 @@ public class CustomerController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        idTxt.setDisable(true);
+        idTxt.setText("Auto Generated");
+        
+        countryCombo.setItems(util.getAllCountries());
+        stateCombo.setItems(util.getAllStates());
+        
         try {
             customersQuery();
         } catch (SQLException ex) {
