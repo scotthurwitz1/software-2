@@ -5,14 +5,22 @@
 package Controller;
 
 import Helper.util;
+import static Helper.util.countriesIds;
+import static Helper.util.statesIds;
 import Model.Customer;
 import Model.Database;
 import static dao.CustomerQuery.customersQuery;
+import dao.JDBC;
 import java.net.URL;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.sql.Timestamp;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
 import javafx.event.ActionEvent;
@@ -114,15 +122,42 @@ public class CustomerController implements Initializable {
     }
 
     @FXML
-    void onActionSaveBtn(ActionEvent event) {
+    void onActionSaveBtn(ActionEvent event) throws SQLException {
         
-//        String address = addressTxt.getText();
-//        String postal = postalTxt.getText();
-//        String name = nameTxt.getText();
-//        String phone = phoneTxt.getText();
-//        String country = 
+        String sql = "INSERT INTO customers (Customer_Name, Address, "
+                + "Postal_code, Phone, Create_Date, Created_By, Last_Update, Last_Updated_By, Division_ID) "
+                + "VALUES (?,?,?,?,?,?,?,?,?)";    
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         
+        String name = nameTxt.getText();
+        String address = addressTxt.getText();
+        String postal = postalTxt.getText();
+        String phone = phoneTxt.getText();
+        Timestamp createDate = Timestamp.valueOf(LocalDateTime.now());
+        String createdBy = "admin";
+        Timestamp lastUpdate = Timestamp.valueOf(LocalDateTime.now());
+        String updatedBy = "admin";
+        int divId = statesIds.get(stateCombo.getValue());
         
+        ps.setString(1, name);
+        ps.setString(2, address);
+        ps.setString(3, postal);
+        ps.setString(4, phone);
+        ps.setTimestamp(5, createDate);
+        ps.setString(6, createdBy);
+        ps.setTimestamp(7, lastUpdate);
+        ps.setString(8, updatedBy);
+        ps.setInt(9, divId);
+        
+        ps.execute();
+        
+        nameTxt.clear();
+        addressTxt.clear();
+        postalTxt.clear();
+        phoneTxt.clear();
+        
+        customersQuery();
+        recordsTbl.setItems(Database.getAllCustomers()); 
 
     }
 

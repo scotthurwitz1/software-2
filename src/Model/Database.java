@@ -26,5 +26,10 @@ public class Database {
         return allCustomers;
     }
     
+    public static ObservableList<Customer> clearCustomers() {
+        allCustomers.clear();
+        return allCustomers;
+    }
+    
     
 }

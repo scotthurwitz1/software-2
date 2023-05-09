@@ -4,6 +4,7 @@
  */
 package Helper;
 
+import Controller.CustomerController;
 import Model.Customer;
 import dao.JDBC;
 import java.io.IOException;
@@ -38,6 +39,7 @@ public abstract class util {
     private static ObservableList<String> allStates = FXCollections.observableArrayList();
     
     public static Map<String, Integer> statesIds = new HashMap<String, Integer>();
+    public static Map<String, Integer> countriesIds = new HashMap<String, Integer>();
     
         /**
      * @return the allCountries
@@ -55,6 +57,11 @@ public abstract class util {
     
     public static void initUtil() throws SQLException {
         
+        //country Ids
+        countriesIds.put("United States", 1);
+        countriesIds.put("United Kingdom", 2);
+        countriesIds.put("Canada", 3);
+        
         // locations query
         String sql = "SELECT * FROM first_level_divisions";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
@@ -68,9 +75,21 @@ public abstract class util {
                 int id = rs.getInt("Division_ID");
                 statesIds.put(state, id);
                 
+                
+                
         }
     }
     
+//    public static String toUTC(String stamp)
+//    {
+//        Timestamp current = Timestamp.valueOf(String.valueOf(stamp));
+//        LocalDateTime local = current.toLocalDateTime();
+//        ZonedDateTime zone = local.atZone(ZoneId.of(ZoneId.systemDefault().toString()));
+//        ZonedDAteTime utc = zone.withZoneSameInstant(ZoneId.of("UTC"));
+//        LocalDateTime local1 = uts.toLocalDateTime();
+//        String utc1 = local1.format(DateTimeFormatter.ofPattern("YYYY-MM-DD HH:MM:SS"));
+//        return utc1;       
+//    }
     
     public static void Alert(String text)
     {

@@ -6,6 +6,8 @@ package dao;
 
 import Model.Customer;
 import Model.Database;
+import static Model.Database.clearCustomers;
+import java.security.Timestamp;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -89,6 +91,7 @@ public class CustomerQuery {
     
     public static void customersQuery() throws SQLException 
     {
+        clearCustomers();
         
         String sql = "SELECT customers.Customer_ID, customers.Customer_Name, customers.Address, "
                 + "customers.Postal_code, customers.Phone, customers.Division_ID, first_level_divisions.Division "

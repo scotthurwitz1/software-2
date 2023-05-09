@@ -31,11 +31,9 @@ public class DBClientAppV4 extends Application {
         JDBC.openConnection();
         
         initUtil();
-        System.out.println(statesIds.get("Northern Ireland"));
         
-//        launch(args);
-//        ObservableList<ObservableList> trial = dbToArray("customers");
-//        System.out.println(trial);
+        launch(args);
+
         JDBC.closeConnection();
         
     }
