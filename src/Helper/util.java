@@ -24,6 +24,8 @@ import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
@@ -33,8 +35,9 @@ public abstract class util {
     
     private static ObservableList<String> allCountries = FXCollections.observableArrayList(
             "United States", "Canada", "United Kingdom");
-    
     private static ObservableList<String> allStates = FXCollections.observableArrayList();
+    
+    public static Map<String, Integer> statesIds = new HashMap<String, Integer>();
     
         /**
      * @return the allCountries
@@ -50,13 +53,21 @@ public abstract class util {
         return allStates;
     }
     
-    public static void statesQuery() throws SQLException {
+    public static void initUtil() throws SQLException {
+        
+        // locations query
         String sql = "SELECT * FROM first_level_divisions";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
         while(rs.next()){
+            // list of states
                 String state = rs.getString("Division");
                 allStates.add(state);
+                
+            // map of state ids
+                int id = rs.getInt("Division_ID");
+                statesIds.put(state, id);
+                
         }
     }
     

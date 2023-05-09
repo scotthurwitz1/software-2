@@ -4,7 +4,9 @@
  */
 package dbclientappv4;
 
-import static Helper.util.statesQuery;
+
+import static Helper.util.initUtil;
+import static Helper.util.statesIds;
 import Model.Database;
 import dao.JDBC;
 import java.sql.SQLException;
@@ -24,13 +26,14 @@ public class DBClientAppV4 extends Application {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) throws SQLException, Exception {
         
         JDBC.openConnection();
         
-        statesQuery();
+        initUtil();
+        System.out.println(statesIds.get("Northern Ireland"));
         
-        launch(args);
+//        launch(args);
 //        ObservableList<ObservableList> trial = dbToArray("customers");
 //        System.out.println(trial);
         JDBC.closeConnection();
