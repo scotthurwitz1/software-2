@@ -39,7 +39,9 @@ public abstract class util {
     private static ObservableList<String> allStates = FXCollections.observableArrayList();
     
     public static Map<String, Integer> statesIds = new HashMap<String, Integer>();
+    public static Map<Integer, String> idsStates = new HashMap<Integer, String>();
     public static Map<String, Integer> countriesIds = new HashMap<String, Integer>();
+    public static Map<String, String> statesCountries = new HashMap<String, String>();
     
         /**
      * @return the allCountries
@@ -63,20 +65,35 @@ public abstract class util {
         countriesIds.put("Canada", 3);
         
         // locations query
+        String country;
         String sql = "SELECT * FROM first_level_divisions";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
         while(rs.next()){
             // list of states
                 String state = rs.getString("Division");
-                allStates.add(state);
-                
-            // map of state ids
+                allStates.add(state);  
+            // map of states, ids
                 int id = rs.getInt("Division_ID");
-                statesIds.put(state, id);
-                
-                
-                
+                statesIds.put(state, id);        
+            // map of ids, states
+                idsStates.put(id, state); 
+            //map of states, countries
+                if (id >= 54)
+                {
+                    country = "United States";
+                    statesCountries.put(state, country);
+                }    
+                else if (id >= 60 && id <= 72)
+                {
+                    country = "Canada";
+                    statesCountries.put(state, country);
+                }
+                else
+                {
+                    country = "United Kingdom";
+                    statesCountries.put(state, country);
+                }
         }
     }
     

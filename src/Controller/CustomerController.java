@@ -7,6 +7,8 @@ package Controller;
 import Helper.util;
 import static Helper.util.countriesIds;
 import static Helper.util.statesIds;
+import static Helper.util.idsStates;
+import static Helper.util.statesCountries;
 import Model.Customer;
 import Model.Database;
 import static dao.CustomerQuery.customersQuery;
@@ -97,32 +99,7 @@ public class CustomerController implements Initializable {
     private ComboBox<String> stateCombo;
 
     @FXML
-    void onActionAddBtn(ActionEvent event) {
-
-    }
-
-    @FXML
-    void onActionCountryCombo(ActionEvent event) {
-
-    }
-
-    @FXML
-    void onActionDeleteBtn(ActionEvent event) {
-
-    }
-
-    @FXML
-    void onActionEditBtn(ActionEvent event) {
-
-    }
-
-    @FXML
-    void onActionExitBtn(ActionEvent event) {
-
-    }
-
-    @FXML
-    void onActionSaveBtn(ActionEvent event) throws SQLException {
+    void onActionAddBtn(ActionEvent event) throws SQLException {
         
         String sql = "INSERT INTO customers (Customer_Name, Address, "
                 + "Postal_code, Phone, Create_Date, Created_By, Last_Update, Last_Updated_By, Division_ID) "
@@ -158,6 +135,55 @@ public class CustomerController implements Initializable {
         
         customersQuery();
         recordsTbl.setItems(Database.getAllCustomers()); 
+
+    }
+
+    @FXML
+    void onActionCountryCombo(ActionEvent event) {
+
+    }
+
+    @FXML
+    void onActionDeleteBtn(ActionEvent event) {
+
+    }
+
+    @FXML
+    void onActionEditBtn(ActionEvent event) {
+        
+        Customer cust = recordsTbl.getSelectionModel().getSelectedItem();
+        
+        String name = cust.getName();
+        String address = cust.getAddress();
+        String postal = cust.getPostalCode();
+        String phone = cust.getPhone();
+        String state = idsStates.get(cust.getDivisionId());
+        String country = statesCountries.get(state);
+
+        nameTxt.setText(name);
+        addressTxt.setText(address);
+        postalTxt.setText(postal);
+        phoneTxt.setText(phone);
+        stateCombo.setValue(state);
+        countryCombo.setValue(country);
+        
+        
+//        Timestamp createDate = Timestamp.valueOf(LocalDateTime.now());
+//        String createdBy = "admin";
+//        Timestamp lastUpdate = Timestamp.valueOf(LocalDateTime.now());
+//        String updatedBy = "admin";
+//        int divId = statesIds.get(stateCombo.getValue());
+    }
+
+    @FXML
+    void onActionExitBtn(ActionEvent event) {
+
+    }
+
+    @FXML
+    void onActionSaveBtn(ActionEvent event) {
+        
+        
 
     }
 

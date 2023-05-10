@@ -72,6 +72,13 @@ public class Customer {
     /**
      * @return the divisionName
      */
+    public int getDivisionId() {
+        return divisionId;
+    }
+    
+    /**
+     * @return the divisionName
+     */
     public String getDivisionName() {
         return divisionName;
     }
