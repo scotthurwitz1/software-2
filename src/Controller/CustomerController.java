@@ -4,6 +4,7 @@
  */
 package Controller;
 
+import Helper.Switcher;
 import Helper.util;
 import static Helper.util.countriesIds;
 import static Helper.util.statesIds;
@@ -13,6 +14,7 @@ import Model.Customer;
 import Model.Database;
 import static dao.CustomerQuery.customersQuery;
 import dao.JDBC;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -40,6 +42,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
  * @author scott
  */
 public class CustomerController implements Initializable {
+    
+    Switcher switcher = new Switcher();
     
     int id = 0;
     String name = "";
@@ -184,7 +188,20 @@ public class CustomerController implements Initializable {
     }
 
     @FXML
-    void onActionDeleteBtn(ActionEvent event) {
+    void onActionDeleteBtn(ActionEvent event) throws SQLException {
+        
+        Customer cust = recordsTbl.getSelectionModel().getSelectedItem();
+        id = cust.getId();
+        
+        String sql = "DELETE FROM customers" 
+                + " WHERE Customer_ID = ?";    
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ps.setInt(1, id);
+        
+        ps.execute();
+        
+        refresh();
+        
 
     }
 
@@ -194,11 +211,14 @@ public class CustomerController implements Initializable {
         Customer cust = recordsTbl.getSelectionModel().getSelectedItem();
         setValues(cust);
         id = cust.getId();
+        
 
     }
 
     @FXML
-    void onActionExitBtn(ActionEvent event) {
+    void onActionExitBtn(ActionEvent event) throws IOException {
+        
+        switcher.screen("/View/MainMenu.fxml", event);
 
     }
 
