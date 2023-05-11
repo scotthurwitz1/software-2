@@ -41,6 +41,17 @@ import javafx.scene.control.cell.PropertyValueFactory;
  */
 public class CustomerController implements Initializable {
     
+    int id = 0;
+    String name = "";
+    String address = "";
+    String postal = "";
+    String phone = "";
+    Timestamp createDate = Timestamp.valueOf(LocalDateTime.now());
+    String createdBy = "admin";
+    Timestamp lastUpdate = Timestamp.valueOf(LocalDateTime.now());
+    String updatedBy = "admin";
+    int divId = 0;
+    
     @FXML
     private Button addBtn;
 
@@ -97,25 +108,61 @@ public class CustomerController implements Initializable {
 
     @FXML
     private ComboBox<String> stateCombo;
+    
+    // lift customer details from text fields
+    void pullValues()
+    {
+        name = nameTxt.getText();
+        address = addressTxt.getText();
+        postal = postalTxt.getText();
+        phone = phoneTxt.getText();
+        createDate = Timestamp.valueOf(LocalDateTime.now());
+        createdBy = "admin";
+        lastUpdate = Timestamp.valueOf(LocalDateTime.now());
+        updatedBy = "admin";
+        divId = statesIds.get(stateCombo.getValue());
+    }
+    
+    // set text field values from selected customer
+    void setValues(Customer cust)
+    {
+        String name = cust.getName();
+        String address = cust.getAddress();
+        String postal = cust.getPostalCode();
+        String phone = cust.getPhone();
+        String state = idsStates.get(cust.getDivisionId());
+        String country = statesCountries.get(state);
+
+        nameTxt.setText(name);
+        addressTxt.setText(address);
+        postalTxt.setText(postal);
+        phoneTxt.setText(phone);
+        stateCombo.setValue(state);
+        countryCombo.setValue(country);
+    }
+    
+    // clear fields and refresh table
+    void refresh() throws SQLException
+    {
+        nameTxt.clear();
+        addressTxt.clear();
+        postalTxt.clear();
+        phoneTxt.clear();
+        stateCombo.setValue(null);
+        countryCombo.setValue(null);
+        customersQuery();
+        recordsTbl.setItems(Database.getAllCustomers()); 
+    }
 
     @FXML
     void onActionAddBtn(ActionEvent event) throws SQLException {
+
+        pullValues();
         
         String sql = "INSERT INTO customers (Customer_Name, Address, "
                 + "Postal_code, Phone, Create_Date, Created_By, Last_Update, Last_Updated_By, Division_ID) "
                 + "VALUES (?,?,?,?,?,?,?,?,?)";    
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-        
-        String name = nameTxt.getText();
-        String address = addressTxt.getText();
-        String postal = postalTxt.getText();
-        String phone = phoneTxt.getText();
-        Timestamp createDate = Timestamp.valueOf(LocalDateTime.now());
-        String createdBy = "admin";
-        Timestamp lastUpdate = Timestamp.valueOf(LocalDateTime.now());
-        String updatedBy = "admin";
-        int divId = statesIds.get(stateCombo.getValue());
-        
         ps.setString(1, name);
         ps.setString(2, address);
         ps.setString(3, postal);
@@ -125,16 +172,9 @@ public class CustomerController implements Initializable {
         ps.setTimestamp(7, lastUpdate);
         ps.setString(8, updatedBy);
         ps.setInt(9, divId);
-        
         ps.execute();
         
-        nameTxt.clear();
-        addressTxt.clear();
-        postalTxt.clear();
-        phoneTxt.clear();
-        
-        customersQuery();
-        recordsTbl.setItems(Database.getAllCustomers()); 
+        refresh();
 
     }
 
@@ -152,27 +192,9 @@ public class CustomerController implements Initializable {
     void onActionEditBtn(ActionEvent event) {
         
         Customer cust = recordsTbl.getSelectionModel().getSelectedItem();
-        
-        String name = cust.getName();
-        String address = cust.getAddress();
-        String postal = cust.getPostalCode();
-        String phone = cust.getPhone();
-        String state = idsStates.get(cust.getDivisionId());
-        String country = statesCountries.get(state);
+        setValues(cust);
+        id = cust.getId();
 
-        nameTxt.setText(name);
-        addressTxt.setText(address);
-        postalTxt.setText(postal);
-        phoneTxt.setText(phone);
-        stateCombo.setValue(state);
-        countryCombo.setValue(country);
-        
-        
-//        Timestamp createDate = Timestamp.valueOf(LocalDateTime.now());
-//        String createdBy = "admin";
-//        Timestamp lastUpdate = Timestamp.valueOf(LocalDateTime.now());
-//        String updatedBy = "admin";
-//        int divId = statesIds.get(stateCombo.getValue());
     }
 
     @FXML
@@ -181,8 +203,30 @@ public class CustomerController implements Initializable {
     }
 
     @FXML
-    void onActionSaveBtn(ActionEvent event) {
+    void onActionSaveBtn(ActionEvent event) throws SQLException {
         
+        pullValues();
+        
+        String sql = "UPDATE customers SET Customer_Name = ?, Address = ?, "
+                + "Postal_code = ?, Phone = ?, Create_Date = ?, Created_By= ?, "
+                + "Last_Update = ?, Last_Updated_By = ?, Division_ID = ? "
+                + " WHERE Customer_ID = ?";    
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ps.setString(1, name);
+        ps.setString(2, address);
+        ps.setString(3, postal);
+        ps.setString(4, phone);
+        ps.setTimestamp(5, createDate);
+        ps.setString(6, createdBy);
+        ps.setTimestamp(7, lastUpdate);
+        ps.setString(8, updatedBy);
+        ps.setInt(9, divId);
+        
+        ps.setInt(10, id);
+        
+        ps.execute();
+        
+        refresh();
         
 
     }

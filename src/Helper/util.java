@@ -79,7 +79,7 @@ public abstract class util {
             // map of ids, states
                 idsStates.put(id, state); 
             //map of states, countries
-                if (id >= 54)
+                if (id <= 54)
                 {
                     country = "United States";
                     statesCountries.put(state, country);
