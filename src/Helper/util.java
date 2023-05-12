@@ -6,9 +6,11 @@ package Helper;
 
 import Controller.CustomerController;
 import Model.Customer;
+import static dao.ContactQuery.contactsQuery;
 import dao.JDBC;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
@@ -25,6 +27,7 @@ import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,6 +46,7 @@ public abstract class util {
     public static Map<String, Integer> countriesIds = new HashMap<String, Integer>();
     public static Map<String, String> statesCountries = new HashMap<String, String>();
     
+    
         /**
      * @return the allCountries
      */
@@ -58,6 +62,9 @@ public abstract class util {
     }
     
     public static void initUtil() throws SQLException {
+        
+        //contacts query
+        contactsQuery();
         
         //country Ids
         countriesIds.put("United States", 1);
@@ -97,16 +104,16 @@ public abstract class util {
         }
     }
     
-//    public static String toUTC(String stamp)
-//    {
-//        Timestamp current = Timestamp.valueOf(String.valueOf(stamp));
-//        LocalDateTime local = current.toLocalDateTime();
-//        ZonedDateTime zone = local.atZone(ZoneId.of(ZoneId.systemDefault().toString()));
-//        ZonedDAteTime utc = zone.withZoneSameInstant(ZoneId.of("UTC"));
-//        LocalDateTime local1 = uts.toLocalDateTime();
-//        String utc1 = local1.format(DateTimeFormatter.ofPattern("YYYY-MM-DD HH:MM:SS"));
-//        return utc1;       
-//    }
+    public static String toUTC(String stamp)
+    {
+        Timestamp current = Timestamp.valueOf(String.valueOf(stamp));
+        LocalDateTime local = current.toLocalDateTime();
+        ZonedDateTime zone = local.atZone(ZoneId.of(ZoneId.systemDefault().toString()));
+        ZonedDateTime utc = zone.withZoneSameInstant(ZoneId.of("UTC"));
+        LocalDateTime local1 = utc.toLocalDateTime();
+        String utc1 = local1.format(DateTimeFormatter.ofPattern("YYYY-MM-DD HH:MM:SS"));
+        return utc1;       
+    }
     
     public static void Alert(String text)
     {

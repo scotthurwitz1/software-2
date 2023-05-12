@@ -5,13 +5,19 @@
 package Controller;
 
 import Helper.util;
+import static Helper.util.statesIds;
+import static Helper.util.toUTC;
 import Model.Appointment;
 import Model.Database;
 import static dao.AppointmentQuery.appointmentsQuery;
+import static dao.ContactQuery.contactsIds;
 import static dao.CustomerQuery.customersQuery;
 import java.net.URL;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -34,7 +40,18 @@ import javafx.scene.control.cell.PropertyValueFactory;
  */
 public class AppointmentController implements Initializable {
     
-        @FXML
+    int id = 0;
+    String title;
+    String descr;
+    String loc;
+    String type;
+    String start;
+    String end;
+    int custId = 0;
+    int userId = 0;
+    int contactId = 0;
+
+    @FXML
     private Button addBtn;
 
     @FXML
@@ -47,7 +64,7 @@ public class AppointmentController implements Initializable {
     private Button backBtn;
 
     @FXML
-    private ComboBox<?> contactCombo;
+    private ComboBox<String> contactCombo;
 
     @FXML
     private TableColumn<Appointment, Integer> contactIdCol;
@@ -74,7 +91,7 @@ public class AppointmentController implements Initializable {
     private TableColumn<Appointment, LocalDateTime> endDateTimeCol;
 
     @FXML
-    private ComboBox<?> endTime;
+    private ComboBox<String> endTime;
 
     @FXML
     private TableColumn<Appointment, Integer> idCol;
@@ -104,7 +121,7 @@ public class AppointmentController implements Initializable {
     private TableColumn<Appointment, LocalDateTime> startDateTimeCol;
 
     @FXML
-    private ComboBox<?> startTime;
+    private ComboBox<String> startTime;
 
     @FXML
     private TableColumn<Appointment, String> titleCol;
@@ -195,6 +212,29 @@ public class AppointmentController implements Initializable {
     @FXML
     void onActionWeekRadio(ActionEvent event) {
 
+    }
+    
+     void pullValues()
+    {
+        String startDate1 = startDate.getValue().format(DateTimeFormatter.ofPattern("YYYY-MM-DD"));
+        String startTime1 = startTime.getValue();
+        
+        String endDate1 = endDate.getValue().format(DateTimeFormatter.ofPattern("YYYY-MM-DD"));
+        String endTime1 = endTime.getValue();
+        
+        String startUTC = toUTC(startDate + " " + startTime + ":00");
+        String endUTC = toUTC(endDate + " " + endTime + ":00");
+        
+        title = titleTxt.getText();
+        descr = descriptionTxt.getText();
+        loc = locationTxt.getText();
+        type = typeTxt.getText();
+        start = startUTC;
+        end = endUTC;
+        custId = Integer.parseInt(custIdTxt.getText());
+        userId = Integer.parseInt(userIdTxt.getText());
+        contactId = contactsIds.get(contactCombo.getValue());
+        
     }
     
     /**

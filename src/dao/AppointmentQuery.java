@@ -21,7 +21,7 @@ public class AppointmentQuery {
     
     public static void appointmentsQuery() throws SQLException 
     {
-        clearCustomers();
+//        clearCustomers();
         
         String sql = "SELECT * FROM appointments";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);

@@ -15,6 +15,7 @@ public class Database {
     
     private static ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
     private static ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
+    private static ObservableList<Contact> allContacts = FXCollections.observableArrayList();
     
     public static void addCustomer(Customer newCust) {
 
@@ -44,6 +45,21 @@ public class Database {
     public static ObservableList<Appointment> clearAppointments() {
         allAppointments.clear();
         return allAppointments;
+    }
+    
+    public static void addContact(Contact newContact) {
+
+        allContacts.add(newContact);
+    
+    }
+    
+    public static ObservableList<Contact> getAllContacts() {
+        return allContacts;
+    }
+    
+    public static ObservableList<Contact> clearContacts() {
+        allContacts.clear();
+        return allContacts;
     }
     
     
