@@ -41,6 +41,7 @@ public abstract class util {
             "United States", "Canada", "United Kingdom");
     private static ObservableList<String> allStates = FXCollections.observableArrayList();
     
+    
     public static Map<String, Integer> statesIds = new HashMap<String, Integer>();
     public static Map<Integer, String> idsStates = new HashMap<Integer, String>();
     public static Map<String, Integer> countriesIds = new HashMap<String, Integer>();
@@ -62,6 +63,8 @@ public abstract class util {
     }
     
     public static void initUtil() throws SQLException {
+        
+        
         
         //contacts query
         contactsQuery();

@@ -12,7 +12,9 @@ import Model.Database;
 import static dao.AppointmentQuery.appointmentsQuery;
 import static dao.ContactQuery.contactsIds;
 import static dao.CustomerQuery.customersQuery;
+import dao.JDBC;
 import java.net.URL;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDate;
@@ -21,6 +23,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -40,6 +44,13 @@ import javafx.scene.control.cell.PropertyValueFactory;
  */
 public class AppointmentController implements Initializable {
     
+    ObservableList<String> businessHours = FXCollections.observableArrayList(
+    "08", "09", "10", "11", "12", "13", 
+    "14", "15", "16", "17", "18", "19", "20", "21");
+    
+    ObservableList<String> businessMins = FXCollections.observableArrayList(
+    "00", "15", "30", "45");
+    
     int id = 0;
     String title;
     String descr;
@@ -50,6 +61,10 @@ public class AppointmentController implements Initializable {
     int custId = 0;
     int userId = 0;
     int contactId = 0;
+    Timestamp createDate;
+    String createdBy;
+    Timestamp lastUpdate;
+    String updatedBy;
 
     @FXML
     private Button addBtn;
@@ -92,6 +107,9 @@ public class AppointmentController implements Initializable {
 
     @FXML
     private ComboBox<String> endTime;
+    
+    @FXML
+    private ComboBox<String> endTime1;
 
     @FXML
     private TableColumn<Appointment, Integer> idCol;
@@ -122,6 +140,9 @@ public class AppointmentController implements Initializable {
 
     @FXML
     private ComboBox<String> startTime;
+    
+    @FXML
+    private ComboBox<String> startTime1;
 
     @FXML
     private TableColumn<Appointment, String> titleCol;
@@ -143,9 +164,79 @@ public class AppointmentController implements Initializable {
 
     @FXML
     private RadioButton weekRadio;
+    
+    void pullValues()
+    {
+        String startDate1 = startDate.getValue().format(DateTimeFormatter.ofPattern("YYYY-MM-DD"));
+        String combStartTime = startTime.getValue()+":"+startTime1.getValue();
+        
+        String endDate1 = endDate.getValue().format(DateTimeFormatter.ofPattern("YYYY-MM-DD"));
+        String combEndTime = endTime.getValue()+":"+endTime1.getValue();
+        
+        String startUTC = toUTC(startDate + " " + combStartTime + ":00");
+        String endUTC = toUTC(endDate + " " + combEndTime + ":00");
+        
+        title = titleTxt.getText();
+        descr = descriptionTxt.getText();
+        loc = locationTxt.getText();
+        type = typeTxt.getText();
+        start = startUTC;
+        end = endUTC;
+        createDate = Timestamp.valueOf(LocalDateTime.now());
+        createdBy = "admin";
+        lastUpdate = Timestamp.valueOf(LocalDateTime.now());
+        updatedBy = "admin";
+        custId = Integer.parseInt(custIdTxt.getText());
+        userId = Integer.parseInt(userIdTxt.getText());
+        contactId = contactsIds.get(contactCombo.getValue());
+
+    }
+    
+     // clear fields and refresh table
+    void refresh() throws SQLException
+    {
+        titleTxt.clear();
+        descriptionTxt.clear();
+        locationTxt.clear();
+        typeTxt.clear();
+        startDate.setValue(null);
+        endDate.setValue(null);
+        custIdTxt.clear();
+        userIdTxt.clear();
+        contactCombo.setValue(null);
+        
+        appointmentsQuery();
+        apptsTbl.setItems(Database.getAllAppointments()); 
+    }
 
     @FXML
-    void onActionAddBtn(ActionEvent event) {
+    void onActionAddBtn(ActionEvent event) throws SQLException {
+        
+        pullValues();
+        
+        String sql = "INSERT INTO appointments (Title, "
+                + "Description, Location, Type, Start, End, "
+                + "Create_Date, Created_By, Last_Update, Last_Updated_By,"
+                + " Customer_ID, User_ID, Contact_ID) "
+                + "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";    
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ps.setString(1, title);
+        ps.setString(2, descr);
+        ps.setString(3, loc);
+        ps.setString(4, type);
+        ps.setString(5, start);
+        ps.setString(6, end);
+        ps.setTimestamp(7, createDate);
+        ps.setString(8, createdBy);
+        ps.setTimestamp(9, lastUpdate);
+        ps.setString(10, updatedBy);
+        ps.setInt(11, custId);
+        ps.setInt(12, userId);
+        ps.setInt(13, contactId);
+        
+        ps.execute();
+        
+        refresh();
 
     }
 
@@ -214,28 +305,6 @@ public class AppointmentController implements Initializable {
 
     }
     
-     void pullValues()
-    {
-        String startDate1 = startDate.getValue().format(DateTimeFormatter.ofPattern("YYYY-MM-DD"));
-        String startTime1 = startTime.getValue();
-        
-        String endDate1 = endDate.getValue().format(DateTimeFormatter.ofPattern("YYYY-MM-DD"));
-        String endTime1 = endTime.getValue();
-        
-        String startUTC = toUTC(startDate + " " + startTime + ":00");
-        String endUTC = toUTC(endDate + " " + endTime + ":00");
-        
-        title = titleTxt.getText();
-        descr = descriptionTxt.getText();
-        loc = locationTxt.getText();
-        type = typeTxt.getText();
-        start = startUTC;
-        end = endUTC;
-        custId = Integer.parseInt(custIdTxt.getText());
-        userId = Integer.parseInt(userIdTxt.getText());
-        contactId = contactsIds.get(contactCombo.getValue());
-        
-    }
     
     /**
      * Initializes the controller class.
@@ -245,6 +314,11 @@ public class AppointmentController implements Initializable {
         // 
         idTxt.setDisable(true);
         idTxt.setText("Auto Generated");
+        
+        startTime.setItems(businessHours);
+        startTime1.setItems(businessMins);
+        endTime.setItems(businessHours);
+        endTime1.setItems(businessMins);
   
         try {
             appointmentsQuery();
