@@ -32,8 +32,8 @@ public class MainMenuController implements Initializable {
     private Button reportBtn;
 
     @FXML
-    void onActionAppBtn(ActionEvent event) {
-
+    void onActionAppBtn(ActionEvent event) throws IOException {
+        switcher.screen("/View/Appointment.fxml", event);
     }
 
     @FXML

@@ -4,6 +4,7 @@
  */
 package Model;
 
+import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 
 /**
@@ -11,43 +12,43 @@ import java.time.OffsetDateTime;
  * @author scott
  */
 public class Appointment {
-    private int appointmentId;
+    private int id;
     private String title;
     private String description;
     private String location;
-    private String Type;
-    private OffsetDateTime start;
-    private OffsetDateTime end;
-    private OffsetDateTime createDate;
+    private String type;
+    private LocalDateTime start;
+    private LocalDateTime end;
+    private LocalDateTime createDate;
     private String createdBy;
-    private OffsetDateTime lastUpdate;
+    private LocalDateTime lastUpdate;
     private String lastUpdatedBy;
-    private int CustomerId;
-    private int UserId;
-    private int ContactId;
+    private int customerId;
+    private int userId;
+    private int contactId;
 
-    public Appointment(int appointmentId, String title, String description, String location, String Type, OffsetDateTime start, OffsetDateTime end, OffsetDateTime createDate, String createdBy, OffsetDateTime lastUpdate, String lastUpdatedBy, int CustomerId, int UserId, int ContactId) {
-        this.appointmentId = appointmentId;
+    public Appointment(int appointmentId, String title, String description, String location, String Type, LocalDateTime start, LocalDateTime end, int CustomerId, int UserId, int ContactId) {
+        this.id = appointmentId;
         this.title = title;
         this.description = description;
         this.location = location;
-        this.Type = Type;
+        this.type = Type;
         this.start = start;
         this.end = end;
         this.createDate = createDate;
         this.createdBy = createdBy;
         this.lastUpdate = lastUpdate;
         this.lastUpdatedBy = lastUpdatedBy;
-        this.CustomerId = CustomerId;
-        this.UserId = UserId;
-        this.ContactId = ContactId;
+        this.customerId = CustomerId;
+        this.userId = UserId;
+        this.contactId = ContactId;
     }
 
     /**
-     * @return the appointmentId
+     * @return the id
      */
-    public int getAppointmentId() {
-        return appointmentId;
+    public int getId() {
+        return id;
     }
 
     /**
@@ -72,30 +73,30 @@ public class Appointment {
     }
 
     /**
-     * @return the Type
+     * @return the type
      */
     public String getType() {
-        return Type;
+        return type;
     }
 
     /**
      * @return the start
      */
-    public OffsetDateTime getStart() {
+    public LocalDateTime getStart() {
         return start;
     }
 
     /**
      * @return the end
      */
-    public OffsetDateTime getEnd() {
+    public LocalDateTime getEnd() {
         return end;
     }
 
     /**
      * @return the createDate
      */
-    public OffsetDateTime getCreateDate() {
+    public LocalDateTime getCreateDate() {
         return createDate;
     }
 
@@ -109,7 +110,7 @@ public class Appointment {
     /**
      * @return the lastUpdate
      */
-    public OffsetDateTime getLastUpdate() {
+    public LocalDateTime getLastUpdate() {
         return lastUpdate;
     }
 
@@ -121,31 +122,31 @@ public class Appointment {
     }
 
     /**
-     * @return the CustomerId
+     * @return the customerId
      */
     public int getCustomerId() {
-        return CustomerId;
+        return customerId;
     }
 
     /**
-     * @return the UserId
+     * @return the userId
      */
     public int getUserId() {
-        return UserId;
+        return userId;
     }
 
     /**
-     * @return the ContactId
+     * @return the contactId
      */
     public int getContactId() {
-        return ContactId;
+        return contactId;
     }
 
     /**
-     * @param appointmentId the appointmentId to set
+     * @param id the id to set
      */
-    public void setAppointmentId(int appointmentId) {
-        this.appointmentId = appointmentId;
+    public void setId(int id) {
+        this.id = id;
     }
 
     /**
@@ -170,30 +171,30 @@ public class Appointment {
     }
 
     /**
-     * @param Type the Type to set
+     * @param type the type to set
      */
-    public void setType(String Type) {
-        this.Type = Type;
+    public void setType(String type) {
+        this.type = type;
     }
 
     /**
      * @param start the start to set
      */
-    public void setStart(OffsetDateTime start) {
+    public void setStart(LocalDateTime start) {
         this.start = start;
     }
 
     /**
      * @param end the end to set
      */
-    public void setEnd(OffsetDateTime end) {
+    public void setEnd(LocalDateTime end) {
         this.end = end;
     }
 
     /**
      * @param createDate the createDate to set
      */
-    public void setCreateDate(OffsetDateTime createDate) {
+    public void setCreateDate(LocalDateTime createDate) {
         this.createDate = createDate;
     }
 
@@ -207,7 +208,7 @@ public class Appointment {
     /**
      * @param lastUpdate the lastUpdate to set
      */
-    public void setLastUpdate(OffsetDateTime lastUpdate) {
+    public void setLastUpdate(LocalDateTime lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
 
@@ -219,25 +220,24 @@ public class Appointment {
     }
 
     /**
-     * @param CustomerId the CustomerId to set
+     * @param customerId the customerId to set
      */
-    public void setCustomerId(int CustomerId) {
-        this.CustomerId = CustomerId;
+    public void setCustomerId(int customerId) {
+        this.customerId = customerId;
     }
 
     /**
-     * @param UserId the UserId to set
+     * @param userId the userId to set
      */
-    public void setUserId(int UserId) {
-        this.UserId = UserId;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     /**
-     * @param ContactId the ContactId to set
+     * @param contactId the contactId to set
      */
-    public void setContactId(int ContactId) {
-        this.ContactId = ContactId;
+    public void setContactId(int contactId) {
+        this.contactId = contactId;
     }
-    
-    
+
 }

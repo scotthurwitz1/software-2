@@ -31,5 +31,20 @@ public class Database {
         return allCustomers;
     }
     
+    public static void addAppointment(Appointment newApp) {
+
+        allAppointments.add(newApp);
+    
+    }
+    
+    public static ObservableList<Appointment> getAllAppointments() {
+        return allAppointments;
+    }
+    
+    public static ObservableList<Appointment> clearAppointments() {
+        allAppointments.clear();
+        return allAppointments;
+    }
+    
     
 }
