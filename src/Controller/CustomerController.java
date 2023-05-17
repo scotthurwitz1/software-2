@@ -203,6 +203,7 @@ public class CustomerController implements Initializable {
         Customer cust = recordsTbl.getSelectionModel().getSelectedItem();
         id = cust.getId();
         
+        
         String sql = "DELETE FROM customers" 
                 + " WHERE Customer_ID = ?";    
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
@@ -211,6 +212,7 @@ public class CustomerController implements Initializable {
         ps.execute();
         
         refresh();
+        
         
 
     }

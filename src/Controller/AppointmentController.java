@@ -6,6 +6,7 @@ package Controller;
 
 import Helper.Switcher;
 import Helper.util;
+import static Helper.util.Alert;
 import static Helper.util.idsStates;
 import static Helper.util.statesCountries;
 import static Helper.util.statesIds;
@@ -307,6 +308,7 @@ public class AppointmentController implements Initializable {
         
         Appointment appt = apptsTbl.getSelectionModel().getSelectedItem();
         id = appt.getId();
+        type = appt.getType();
         
         String sql = "DELETE FROM appointments" 
                 + " WHERE Appointment_ID = ?";    
@@ -316,6 +318,9 @@ public class AppointmentController implements Initializable {
         ps.execute();
         
         refresh();
+        
+        Alert("The " + type + ", appointment ID: " + Integer.valueOf(id) + " has been "
+                + "successfully cancelled");
 
     }
 
