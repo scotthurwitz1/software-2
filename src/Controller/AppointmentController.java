@@ -14,6 +14,7 @@ import static Helper.util.toUTC;
 import Model.Appointment;
 import Model.Customer;
 import Model.Database;
+import static Model.Database.getAllAppointments;
 import static dao.AppointmentQuery.appointmentsQuery;
 import static dao.ContactQuery.contacts;
 import static dao.ContactQuery.contactsIds;
@@ -28,6 +29,8 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.Month;
+import java.time.Year;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -345,6 +348,20 @@ public class AppointmentController implements Initializable {
 
     @FXML
     void onActionMonthRadio(ActionEvent event) {
+        
+        ObservableList<Appointment> monthly = FXCollections.observableArrayList();
+        
+        Month month = LocalDate.now().getMonth();
+        int year = LocalDate.now().getYear();
+        
+        getAllAppointments().forEach(appt -> {
+            if (appt.getStart().getMonth() == month && appt.getStart().getYear() == year)
+                {
+                    monthly.add(appt);
+                }
+        });
+        
+        apptsTbl.setItems(monthly);
 
     }
 
