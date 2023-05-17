@@ -266,11 +266,10 @@ public class AppointmentController implements Initializable {
     
     void checkBusinessHours()
     {
-       
         String hour = startTime.getValue();
         String stamp = "1994-08-16 " + hour + ":00:00";
         int estHour = util.toEST(stamp);
-        if (estHour < 8 || estHour > 22)
+        if (estHour < 8 || estHour > 21)
         {
             Alert("Please select a time within our business hours of "
                     + "8 AM to 10 PM EST");
