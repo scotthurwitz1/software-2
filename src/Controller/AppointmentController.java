@@ -4,6 +4,7 @@
  */
 package Controller;
 
+import Helper.Switcher;
 import Helper.util;
 import static Helper.util.idsStates;
 import static Helper.util.statesCountries;
@@ -18,6 +19,7 @@ import static dao.ContactQuery.contactsIds;
 import static dao.ContactQuery.idsContacts;
 import static dao.CustomerQuery.customersQuery;
 import dao.JDBC;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -49,6 +51,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
  * @author scott
  */
 public class AppointmentController implements Initializable {
+    
+    Switcher switcher = new Switcher();
     
     ObservableList<String> businessHours = FXCollections.observableArrayList(
     "08", "09", "10", "11", "12", "13", 
@@ -287,7 +291,9 @@ public class AppointmentController implements Initializable {
     }
 
     @FXML
-    void onActionBackBtn(ActionEvent event) {
+    void onActionBackBtn(ActionEvent event) throws IOException {
+        
+        switcher.screen("/View/MainMenu.fxml", event);
 
     }
 

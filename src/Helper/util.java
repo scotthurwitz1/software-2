@@ -40,6 +40,9 @@ public abstract class util {
     private static ObservableList<String> allCountries = FXCollections.observableArrayList(
             "United States", "Canada", "United Kingdom");
     private static ObservableList<String> allStates = FXCollections.observableArrayList();
+    private static ObservableList<String> usStates = FXCollections.observableArrayList();
+    private static ObservableList<String> canadaStates = FXCollections.observableArrayList();
+    private static ObservableList<String> ukStates = FXCollections.observableArrayList();
     
     
     public static Map<String, Integer> statesIds = new HashMap<String, Integer>();
@@ -48,9 +51,10 @@ public abstract class util {
     public static Map<String, String> statesCountries = new HashMap<String, String>();
     
     
-        /**
+     /**
      * @return the allCountries
      */
+  
     public static ObservableList<String> getAllCountries() {
         return allCountries;
     }
@@ -93,16 +97,19 @@ public abstract class util {
                 {
                     country = "United States";
                     statesCountries.put(state, country);
+                    getUsStates().add(state);
                 }    
                 else if (id >= 60 && id <= 72)
                 {
                     country = "Canada";
                     statesCountries.put(state, country);
+                    getCanadaStates().add(state);
                 }
                 else
                 {
                     country = "United Kingdom";
                     statesCountries.put(state, country);
+                    getUkStates().add(state);
                 }
         }
     }
@@ -165,6 +172,27 @@ public abstract class util {
 //        System.out.println("UTC to User Time: " + myZDT);
 //
 //    }
+
+    /**
+     * @return the usStates
+     */
+    public static ObservableList<String> getUsStates() {
+        return usStates;
+    }
+
+    /**
+     * @return the canadaStates
+     */
+    public static ObservableList<String> getCanadaStates() {
+        return canadaStates;
+    }
+
+    /**
+     * @return the ukStates
+     */
+    public static ObservableList<String> getUkStates() {
+        return ukStates;
+    }
 
 
    

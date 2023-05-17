@@ -7,6 +7,9 @@ package Controller;
 import Helper.Switcher;
 import Helper.util;
 import static Helper.util.countriesIds;
+import static Helper.util.getCanadaStates;
+import static Helper.util.getUkStates;
+import static Helper.util.getUsStates;
 import static Helper.util.statesIds;
 import static Helper.util.idsStates;
 import static Helper.util.statesCountries;
@@ -184,6 +187,13 @@ public class CustomerController implements Initializable {
 
     @FXML
     void onActionCountryCombo(ActionEvent event) {
+        
+        if (countryCombo.getValue().equals("United States"))
+            stateCombo.setItems(getUsStates());
+        else if (countryCombo.getValue().equals("United Kingdom"))
+            stateCombo.setItems(getUkStates());
+        else if (countryCombo.getValue().equals("Canada"))
+            stateCombo.setItems(getCanadaStates());
 
     }
 
@@ -265,8 +275,7 @@ public class CustomerController implements Initializable {
         idTxt.setText("Auto Generated");
         
         countryCombo.setItems(util.getAllCountries());
-        stateCombo.setItems(util.getAllStates());
-        
+               
         try {
             customersQuery();
         } catch (SQLException ex) {
