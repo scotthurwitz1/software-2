@@ -338,7 +338,36 @@ public class AppointmentController implements Initializable {
     }
 
     @FXML
-    void onActionSaveBtn(ActionEvent event) {
+    void onActionSaveBtn(ActionEvent event) throws SQLException {
+        
+        pullValues();
+        
+        String sql = "UPDATE appointments SET Title = ?, " 
+                + "Description = ?, Location = ?, Type = ?, Start = ?, End = ?, "
+                + "Create_Date = ?, Created_By = ?, Last_Update = ?, Last_Updated_By = ?,"
+                + " Customer_ID = ? , User_ID = ?, Contact_ID = ?"
+                + " WHERE Appointment_ID = ?"; 
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ps.setString(1, title);
+        ps.setString(2, descr);
+        ps.setString(3, loc);
+        ps.setString(4, type);
+        ps.setString(5, start);
+        ps.setString(6, end);
+        ps.setTimestamp(7, createDate);
+        ps.setString(8, createdBy);
+        ps.setTimestamp(9, lastUpdate);
+        ps.setString(10, updatedBy);
+        ps.setInt(11, custId);
+        ps.setInt(12, userId);
+        ps.setInt(13, contactId);
+        
+        ps.setInt(14, id);
+        
+        ps.execute();
+        
+        refresh();
+        
 
     }
 
