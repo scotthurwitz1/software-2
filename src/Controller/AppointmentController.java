@@ -32,6 +32,8 @@ import java.time.LocalTime;
 import java.time.Month;
 import java.time.Year;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.WeekFields;
+import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -291,6 +293,8 @@ public class AppointmentController implements Initializable {
 
     @FXML
     void onActionAllApptsRadio(ActionEvent event) {
+        
+        apptsTbl.setItems(Database.getAllAppointments());
 
     }
 
@@ -416,6 +420,23 @@ public class AppointmentController implements Initializable {
 
     @FXML
     void onActionWeekRadio(ActionEvent event) {
+        
+        ObservableList<Appointment> weekly = FXCollections.observableArrayList();
+        WeekFields weekFields = WeekFields.of(Locale.getDefault());
+        
+        LocalDate date = LocalDate.now();
+        int week = date.get(weekFields.weekOfWeekBasedYear());
+        int year = LocalDate.now().getYear();
+        
+        getAllAppointments().forEach(appt -> {
+            if (appt.getStart().get(weekFields.weekOfWeekBasedYear()) == week 
+                    && appt.getStart().getYear() == year)
+                {
+                    weekly.add(appt);
+                }
+        });
+        
+        apptsTbl.setItems(weekly);
 
     }
     

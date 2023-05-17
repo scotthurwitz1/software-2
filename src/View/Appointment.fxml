@@ -8,6 +8,7 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -30,9 +31,12 @@
             <TableColumn fx:id="userIdCol" prefWidth="112.55804443359375" text="User Id" />
         </columns>
       </TableView>
-      <RadioButton fx:id="weekRadio" layoutX="622.0" layoutY="59.0" mnemonicParsing="false" onAction="#onActionWeekRadio" text="Week" />
-      <RadioButton fx:id="monthRadio" layoutX="745.0" layoutY="59.0" mnemonicParsing="false" onAction="#onActionMonthRadio" text="Month" />
-      <RadioButton fx:id="allApptsRadio" layoutX="862.0" layoutY="59.0" mnemonicParsing="false" onAction="#onActionAllApptsRadio" text="All Appointments" />
+      <RadioButton fx:id="weekRadio" layoutX="622.0" layoutY="59.0" mnemonicParsing="false" onAction="#onActionWeekRadio" text="Week">
+         <toggleGroup>
+            <ToggleGroup fx:id="filterTG" />
+         </toggleGroup></RadioButton>
+      <RadioButton fx:id="monthRadio" layoutX="745.0" layoutY="59.0" mnemonicParsing="false" onAction="#onActionMonthRadio" text="Month" toggleGroup="$filterTG" />
+      <RadioButton fx:id="allApptsRadio" layoutX="862.0" layoutY="59.0" mnemonicParsing="false" onAction="#onActionAllApptsRadio" text="All Appointments" toggleGroup="$filterTG" />
       <GridPane layoutX="70.0" layoutY="541.0" prefHeight="223.0" prefWidth="334.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.52912902832031" minWidth="10.0" prefWidth="75.02428436279297" />
