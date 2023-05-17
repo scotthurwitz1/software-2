@@ -116,13 +116,24 @@ public abstract class util {
     
     public static String toUTC(String stamp)
     {
-        Timestamp current = Timestamp.valueOf(String.valueOf(stamp));
-        LocalDateTime local = current.toLocalDateTime();
+        Timestamp ex = Timestamp.valueOf(String.valueOf(stamp));
+        LocalDateTime local = ex.toLocalDateTime();
         ZonedDateTime zone = local.atZone(ZoneId.of(ZoneId.systemDefault().toString()));
         ZonedDateTime utc = zone.withZoneSameInstant(ZoneId.of("UTC"));
         LocalDateTime local1 = utc.toLocalDateTime();
         String utc1 = local1.format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss"));
         return utc1;       
+    }
+    
+    public static int toEST(String stamp)
+    {
+        Timestamp ex = Timestamp.valueOf(String.valueOf(stamp));
+        LocalDateTime local = ex.toLocalDateTime();
+        ZonedDateTime zone = local.atZone(ZoneId.of(ZoneId.systemDefault().toString()));
+        ZonedDateTime est = zone.withZoneSameInstant(ZoneId.of("US/Eastern"));
+        LocalDateTime local1 = est.toLocalDateTime();
+        int estHour = local1.getHour();
+        return estHour;  
     }
     
     public static void Alert(String text)

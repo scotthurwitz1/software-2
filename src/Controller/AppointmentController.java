@@ -30,7 +30,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.Month;
+import java.time.OffsetDateTime;
 import java.time.Year;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.WeekFields;
 import java.util.Locale;
@@ -60,11 +62,13 @@ public class AppointmentController implements Initializable {
     
     Switcher switcher = new Switcher();
     
-    ObservableList<String> businessHours = FXCollections.observableArrayList(
-    "08", "09", "10", "11", "12", "13", 
-    "14", "15", "16", "17", "18", "19", "20", "21");
+    ObservableList<String> hours = FXCollections.observableArrayList("01", 
+            "02", "03", "04", "05", "06",
+    "07", "08", "09", "10", "11", "12", "13", 
+    "14", "15", "16", "17", "18", "19", "20", "21",
+    "22", "23", "24");
     
-    ObservableList<String> businessMins = FXCollections.observableArrayList(
+    ObservableList<String> mins = FXCollections.observableArrayList(
     "00", "15", "30", "45");
     
     int id = 0;
@@ -259,6 +263,20 @@ public class AppointmentController implements Initializable {
         appointmentsQuery();
         apptsTbl.setItems(Database.getAllAppointments()); 
     }
+    
+    void checkBusinessHours()
+    {
+       
+        String hour = startTime.getValue();
+        String stamp = "1994-08-16 " + hour + ":00:00";
+        int estHour = util.toEST(stamp);
+        if (estHour < 8 || estHour > 22)
+        {
+            Alert("Please select a time within our business hours of "
+                    + "8 AM to 10 PM EST");
+        }
+        
+    }
 
     @FXML
     void onActionAddBtn(ActionEvent event) throws SQLException {
@@ -410,6 +428,8 @@ public class AppointmentController implements Initializable {
 
     @FXML
     void onActionStartTime(ActionEvent event) {
+        
+        checkBusinessHours();
 
     }
 
@@ -450,10 +470,10 @@ public class AppointmentController implements Initializable {
         idTxt.setDisable(true);
         idTxt.setText("Auto Generated");
         
-        startTime.setItems(businessHours);
-        startTime1.setItems(businessMins);
-        endTime.setItems(businessHours);
-        endTime1.setItems(businessMins);
+        startTime.setItems(hours);
+        startTime1.setItems(mins);
+        endTime.setItems(hours);
+        endTime1.setItems(mins);
         contactCombo.setItems(contacts);
   
         try {
