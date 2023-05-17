@@ -7,7 +7,9 @@ package dao;
 import Model.Appointment;
 import Model.Customer;
 import Model.Database;
+import static Model.Database.clearAppointments;
 import static Model.Database.clearCustomers;
+import static Model.Database.getAllAppointments;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -21,7 +23,7 @@ public class AppointmentQuery {
     
     public static void appointmentsQuery() throws SQLException 
     {
-//        clearCustomers();
+        clearAppointments();
         
         String sql = "SELECT * FROM appointments";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);

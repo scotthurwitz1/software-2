@@ -5,12 +5,17 @@
 package Controller;
 
 import Helper.util;
+import static Helper.util.idsStates;
+import static Helper.util.statesCountries;
 import static Helper.util.statesIds;
 import static Helper.util.toUTC;
 import Model.Appointment;
+import Model.Customer;
 import Model.Database;
 import static dao.AppointmentQuery.appointmentsQuery;
+import static dao.ContactQuery.contacts;
 import static dao.ContactQuery.contactsIds;
+import static dao.ContactQuery.idsContacts;
 import static dao.CustomerQuery.customersQuery;
 import dao.JDBC;
 import java.net.URL;
@@ -19,6 +24,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -167,14 +173,14 @@ public class AppointmentController implements Initializable {
     
     void pullValues()
     {
-        String startDate1 = startDate.getValue().format(DateTimeFormatter.ofPattern("YYYY-MM-DD"));
+        String startDate1 = startDate.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         String combStartTime = startTime.getValue()+":"+startTime1.getValue();
         
-        String endDate1 = endDate.getValue().format(DateTimeFormatter.ofPattern("YYYY-MM-DD"));
+        String endDate1 = endDate.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         String combEndTime = endTime.getValue()+":"+endTime1.getValue();
         
-        String startUTC = toUTC(startDate + " " + combStartTime + ":00");
-        String endUTC = toUTC(endDate + " " + combEndTime + ":00");
+        String startUTC = toUTC(startDate1 + " " + combStartTime + ":00");
+        String endUTC = toUTC(endDate1 + " " + combEndTime + ":00");
         
         title = titleTxt.getText();
         descr = descriptionTxt.getText();
@@ -192,9 +198,44 @@ public class AppointmentController implements Initializable {
 
     }
     
+    // set text field values from selected customer
+    void setValues(Appointment appt)
+    {
+        String id = Integer.toString(appt.getId());
+        String title = appt.getTitle();
+        String description = appt.getDescription();
+        String location = appt.getLocation();
+        String type = appt.getType();
+        String custId = Integer.toString(appt.getCustomerId());
+        LocalDate startDate1 = appt.getStart().toLocalDate();
+        LocalDate endDate1 = appt.getEnd().toLocalDate();
+        String startHour = String.valueOf(appt.getStart().toLocalTime().getHour());
+        String startMin = String.valueOf(appt.getStart().toLocalTime().getMinute());
+        String endHour = String.valueOf(appt.getEnd().toLocalTime().getHour());
+        String endMin = String.valueOf(appt.getEnd().toLocalTime().getMinute());
+        String contact = idsContacts.get(appt.getContactId());
+        String userId = String.valueOf(appt.getUserId());
+
+        idTxt.setText(id);
+        titleTxt.setText(title);
+        descriptionTxt.setText(description);
+        locationTxt.setText(location);
+        typeTxt.setText(type);
+        custIdTxt.setText(custId);
+        startDate.setValue(startDate1);
+        endDate.setValue(endDate1);
+        startTime.setValue(startHour);
+        startTime1.setValue(startMin);
+        endTime.setValue(endHour);
+        endTime1.setValue(endMin);
+        contactCombo.setValue(contact);
+        userIdTxt.setText(userId);
+    }
+    
      // clear fields and refresh table
     void refresh() throws SQLException
     {
+        
         titleTxt.clear();
         descriptionTxt.clear();
         locationTxt.clear();
@@ -256,7 +297,19 @@ public class AppointmentController implements Initializable {
     }
 
     @FXML
-    void onActionDeleteBtn(ActionEvent event) {
+    void onActionDeleteBtn(ActionEvent event) throws SQLException {
+        
+        Appointment appt = apptsTbl.getSelectionModel().getSelectedItem();
+        id = appt.getId();
+        
+        String sql = "DELETE FROM appointments" 
+                + " WHERE Appointment_ID = ?";    
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ps.setInt(1, id);
+        
+        ps.execute();
+        
+        refresh();
 
     }
 
@@ -272,6 +325,10 @@ public class AppointmentController implements Initializable {
 
     @FXML
     void onActionModifyBtn(ActionEvent event) {
+        
+        Appointment appt = apptsTbl.getSelectionModel().getSelectedItem();
+        setValues(appt);
+        id = appt.getId();
 
     }
 
@@ -319,6 +376,7 @@ public class AppointmentController implements Initializable {
         startTime1.setItems(businessMins);
         endTime.setItems(businessHours);
         endTime1.setItems(businessMins);
+        contactCombo.setItems(contacts);
   
         try {
             appointmentsQuery();
@@ -338,6 +396,8 @@ public class AppointmentController implements Initializable {
         custIdCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         contactIdCol.setCellValueFactory(new PropertyValueFactory<>("contactId"));
         userIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
+        
+
     }    
     
 }

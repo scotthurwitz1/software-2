@@ -19,28 +19,23 @@ public class Appointment {
     private String type;
     private LocalDateTime start;
     private LocalDateTime end;
-    private LocalDateTime createDate;
-    private String createdBy;
-    private LocalDateTime lastUpdate;
-    private String lastUpdatedBy;
     private int customerId;
     private int userId;
     private int contactId;
 
-    public Appointment(int CustomerId, String title, String description, String location, String Type, LocalDateTime start, LocalDateTime end, int UserId, int ContactId, int userId1) {
+    public Appointment(int id, String title, String description, String location, 
+            String type, LocalDateTime start, LocalDateTime end, int userId, int customerId,  
+            int contactId) {
+        this.id = id;
         this.title = title;
         this.description = description;
         this.location = location;
-        this.type = Type;
+        this.type = type;
         this.start = start;
         this.end = end;
-        this.createDate = createDate;
-        this.createdBy = createdBy;
-        this.lastUpdate = lastUpdate;
-        this.lastUpdatedBy = lastUpdatedBy;
-        this.customerId = CustomerId;
-        this.userId = UserId;
-        this.contactId = ContactId;
+        this.customerId = customerId;
+        this.contactId = contactId;
+        this.userId = userId;
     }
 
     /**
@@ -95,30 +90,6 @@ public class Appointment {
     /**
      * @return the createDate
      */
-    public LocalDateTime getCreateDate() {
-        return createDate;
-    }
-
-    /**
-     * @return the createdBy
-     */
-    public String getCreatedBy() {
-        return createdBy;
-    }
-
-    /**
-     * @return the lastUpdate
-     */
-    public LocalDateTime getLastUpdate() {
-        return lastUpdate;
-    }
-
-    /**
-     * @return the lastUpdatedBy
-     */
-    public String getLastUpdatedBy() {
-        return lastUpdatedBy;
-    }
 
     /**
      * @return the customerId
@@ -139,13 +110,6 @@ public class Appointment {
      */
     public int getContactId() {
         return contactId;
-    }
-
-    /**
-     * @param id the id to set
-     */
-    public void setId(int id) {
-        this.id = id;
     }
 
     /**
@@ -188,34 +152,6 @@ public class Appointment {
      */
     public void setEnd(LocalDateTime end) {
         this.end = end;
-    }
-
-    /**
-     * @param createDate the createDate to set
-     */
-    public void setCreateDate(LocalDateTime createDate) {
-        this.createDate = createDate;
-    }
-
-    /**
-     * @param createdBy the createdBy to set
-     */
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
-    }
-
-    /**
-     * @param lastUpdate the lastUpdate to set
-     */
-    public void setLastUpdate(LocalDateTime lastUpdate) {
-        this.lastUpdate = lastUpdate;
-    }
-
-    /**
-     * @param lastUpdatedBy the lastUpdatedBy to set
-     */
-    public void setLastUpdatedBy(String lastUpdatedBy) {
-        this.lastUpdatedBy = lastUpdatedBy;
     }
 
     /**

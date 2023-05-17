@@ -14,6 +14,8 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 /**
  *
@@ -22,6 +24,8 @@ import java.util.Map;
 public class ContactQuery {
     
     public static Map<String, Integer> contactsIds = new HashMap<String, Integer>();
+    public static Map<Integer, String> idsContacts = new HashMap<Integer, String>();
+    public static ObservableList<String> contacts = FXCollections.observableArrayList();
     
     public static void contactsQuery() throws SQLException 
     {
@@ -41,6 +45,8 @@ public class ContactQuery {
             Database.addContact(contact);
             
             contactsIds.put(name, id);
+            idsContacts.put(id, name);
+            contacts.add(name);
         }
         
     }

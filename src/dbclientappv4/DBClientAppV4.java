@@ -7,7 +7,9 @@ package dbclientappv4;
 
 import static Helper.util.initUtil;
 import static Helper.util.statesIds;
+import Model.Appointment;
 import Model.Database;
+import static Model.Database.getAllAppointments;
 import dao.JDBC;
 import java.sql.SQLException;
 import javafx.application.Application;
@@ -31,6 +33,7 @@ public class DBClientAppV4 extends Application {
         JDBC.openConnection();
         
         initUtil();
+
         
         launch(args);
 
@@ -40,7 +43,7 @@ public class DBClientAppV4 extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/View/Login.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/View/Appointment.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setTitle("My Java FX Menu");

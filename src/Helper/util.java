@@ -114,7 +114,7 @@ public abstract class util {
         ZonedDateTime zone = local.atZone(ZoneId.of(ZoneId.systemDefault().toString()));
         ZonedDateTime utc = zone.withZoneSameInstant(ZoneId.of("UTC"));
         LocalDateTime local1 = utc.toLocalDateTime();
-        String utc1 = local1.format(DateTimeFormatter.ofPattern("YYYY-MM-DD HH:MM:SS"));
+        String utc1 = local1.format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss"));
         return utc1;       
     }
     
