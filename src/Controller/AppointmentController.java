@@ -26,13 +26,16 @@ import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.Month;
 import java.time.OffsetDateTime;
 import java.time.Year;
+import java.time.ZoneId;
 import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.WeekFields;
 import java.util.Locale;
@@ -61,6 +64,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 public class AppointmentController implements Initializable {
     
     Switcher switcher = new Switcher();
+    DateTimeFormatter min = DateTimeFormatter.ofPattern ("mm");
+    DateTimeFormatter hour = DateTimeFormatter.ofPattern ("hh");
+    DateTimeFormatter hourMin = DateTimeFormatter.ofPattern ("HH:mm");
+    DateTimeFormatter yearMonthDay = DateTimeFormatter.ofPattern ("yyyy-MM-dd");
     
     ObservableList<String> hours = FXCollections.observableArrayList("01", 
             "02", "03", "04", "05", "06",
@@ -223,10 +230,10 @@ public class AppointmentController implements Initializable {
         String custId = Integer.toString(appt.getCustomerId());
         LocalDate startDate1 = appt.getStart().toLocalDate();
         LocalDate endDate1 = appt.getEnd().toLocalDate();
-        String startHour = String.valueOf(appt.getStart().toLocalTime().getHour());
-        String startMin = String.valueOf(appt.getStart().toLocalTime().getMinute());
-        String endHour = String.valueOf(appt.getEnd().toLocalTime().getHour());
-        String endMin = String.valueOf(appt.getEnd().toLocalTime().getMinute());
+        String startHour = appt.getStart().toLocalTime().format(hour);
+        String startMin = appt.getStart().toLocalTime().format(min);
+        String endHour = appt.getEnd().toLocalTime().format(hour);
+        String endMin = appt.getEnd().toLocalTime().format(min);
         String contact = idsContacts.get(appt.getContactId());
         String userId = String.valueOf(appt.getUserId());
 
@@ -247,33 +254,87 @@ public class AppointmentController implements Initializable {
     }
     
      // clear fields and refresh table
-    void refresh() throws SQLException
-    {
-        
-        titleTxt.clear();
-        descriptionTxt.clear();
-        locationTxt.clear();
-        typeTxt.clear();
-        startDate.setValue(null);
-        endDate.setValue(null);
-        custIdTxt.clear();
-        userIdTxt.clear();
-        contactCombo.setValue(null);
-        
-        appointmentsQuery();
-        apptsTbl.setItems(Database.getAllAppointments()); 
+    boolean refresh() throws SQLException
+    {   
+        if (checkTime() == false)
+        {
+            return false;
+        }
+        else
+        {
+            titleTxt.clear();
+            descriptionTxt.clear();
+            locationTxt.clear();
+            typeTxt.clear();
+            startDate.setValue(null);
+            endDate.setValue(null);
+            custIdTxt.clear();
+            userIdTxt.clear();
+            contactCombo.setValue(null);
+
+            appointmentsQuery();
+            apptsTbl.setItems(Database.getAllAppointments()); 
+            return true;
+        }
+
     }
     
-    void checkBusinessHours()
-    {
-        String hour = startTime.getValue();
-        String stamp = "1994-08-16 " + hour + ":00:00";
-        int estHour = util.toEST(stamp);
-        if (estHour < 8 || estHour > 21)
+    boolean checkTime()
+    {   
+        //format start/end dates and times
+        String apptStartDate = startDate.getValue().format(yearMonthDay);
+        String apptStartTime = startTime.getValue()+":"+startTime1.getValue();
+        
+        String apptEndDate = endDate.getValue().format(yearMonthDay);
+        String apptEndTime = endTime.getValue()+":"+endTime1.getValue();
+        
+        //convert to utc 
+        String startUTC = toUTC(apptStartDate + " " + apptStartTime + ":00");
+        String endUTC = toUTC(apptEndDate + " " + apptEndTime + ":00");
+        
+        
+        LocalTime ltStart = LocalTime.parse(apptStartTime, hourMin);
+        LocalTime ltEnd = LocalTime.parse(apptEndTime, hourMin);
+        //create LocalDateTime objects
+        LocalDateTime ldtStart = LocalDateTime.of(startDate.getValue(), ltStart);
+        LocalDateTime ldtEnd = LocalDateTime.of(endDate.getValue(), ltEnd);
+        
+        ZonedDateTime zdtStart = ZonedDateTime.of(ldtStart,ZoneId.systemDefault());
+        ZonedDateTime zdtEnd = ZonedDateTime.of(ldtEnd,ZoneId.systemDefault());
+        //create Eastern time objects
+        ZonedDateTime estStart = zdtStart.withZoneSameInstant(ZoneId.of("America/New_York"));
+        ZonedDateTime estEnd = zdtEnd.withZoneSameInstant(ZoneId.of("America/New_York"));
+        
+        int startDay = estStart.getDayOfWeek().getValue();
+        int endDay = estEnd.getDayOfWeek().getValue();
+        //get day of week
+        int mon = DayOfWeek.MONDAY.getValue();
+        int fri = DayOfWeek.FRIDAY.getValue();
+        
+        LocalTime open = LocalTime.of(8,0,0);
+        LocalTime close = LocalTime.of(22,0,0);
+        //get time of day
+        LocalTime estStartTime = estStart.toLocalTime();
+        LocalTime estEndTime = estEnd.toLocalTime();
+        
+        //check appt day
+        if (startDay < mon || startDay>fri || endDay < mon || endDay > fri)
         {
-            Alert("Please select a time within our business hours of "
-                    + "8 AM to 10 PM EST");
+            Alert("Please select a day within our hours of operation: "
+                    + "Mon-Fri");
+            return false;
         }
+
+        //check appt time
+        if (estStartTime.isBefore(open) || estStartTime.isAfter(close) 
+                || estEndTime.isBefore(open) || estEndTime.isAfter(close))
+        {
+            Alert("Please select a time within our hours of operation: "
+                    + "8am to 10pm");
+            return false;
+        }
+        else
+        return true;
         
     }
 
@@ -428,7 +489,6 @@ public class AppointmentController implements Initializable {
     @FXML
     void onActionStartTime(ActionEvent event) {
         
-        checkBusinessHours();
 
     }
 
