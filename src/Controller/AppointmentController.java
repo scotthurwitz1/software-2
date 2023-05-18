@@ -65,9 +65,10 @@ public class AppointmentController implements Initializable {
     
     Switcher switcher = new Switcher();
     DateTimeFormatter min = DateTimeFormatter.ofPattern ("mm");
-    DateTimeFormatter hour = DateTimeFormatter.ofPattern ("hh");
+    DateTimeFormatter hour = DateTimeFormatter.ofPattern ("HH");
     DateTimeFormatter hourMin = DateTimeFormatter.ofPattern ("HH:mm");
     DateTimeFormatter yearMonthDay = DateTimeFormatter.ofPattern ("yyyy-MM-dd");
+    DateTimeFormatter all = DateTimeFormatter.ofPattern ("yyyy-MM-dd HH:mm:ss");
     
     ObservableList<String> hours = FXCollections.observableArrayList("01", 
             "02", "03", "04", "05", "06",
@@ -194,10 +195,10 @@ public class AppointmentController implements Initializable {
     
     void pullValues()
     {
-        String startDate1 = startDate.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        String startDate1 = startDate.getValue().format(yearMonthDay);
         String combStartTime = startTime.getValue()+":"+startTime1.getValue();
         
-        String endDate1 = endDate.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        String endDate1 = endDate.getValue().format(yearMonthDay);
         String combEndTime = endTime.getValue()+":"+endTime1.getValue();
         
         String startUTC = toUTC(startDate1 + " " + combStartTime + ":00");
@@ -289,10 +290,9 @@ public class AppointmentController implements Initializable {
         String apptEndTime = endTime.getValue()+":"+endTime1.getValue();
         
         //convert to utc 
-        String startUTC = toUTC(apptStartDate + " " + apptStartTime + ":00");
-        String endUTC = toUTC(apptEndDate + " " + apptEndTime + ":00");
-        
-        
+        LocalDateTime startUTC = LocalDateTime.parse(toUTC(apptStartDate + " " + apptStartTime + ":00"), all);
+        LocalDateTime endUTC = LocalDateTime.parse(toUTC(apptEndDate + " " + apptEndTime + ":00"), all);
+
         LocalTime ltStart = LocalTime.parse(apptStartTime, hourMin);
         LocalTime ltEnd = LocalTime.parse(apptEndTime, hourMin);
         //create LocalDateTime objects
@@ -324,16 +324,40 @@ public class AppointmentController implements Initializable {
                     + "Mon-Fri");
             return false;
         }
-
         //check appt time
-        if (estStartTime.isBefore(open) || estStartTime.isAfter(close) 
+        else if (estStartTime.isBefore(open) || estStartTime.isAfter(close) 
                 || estEndTime.isBefore(open) || estEndTime.isAfter(close))
         {
             Alert("Please select a time within our hours of operation: "
                     + "8am to 10pm");
             return false;
         }
+        //check appointment positive duration 
+        else if (estStartTime.isAfter(estEndTime) || estStartTime.equals(estEndTime))
+        {
+            Alert("Please make sure the appointment start time is "
+                    + "before the end time");
+            return false;
+        }
+//        check if appointments are overlapping
         else
+        {
+            for (Appointment appt: getAllAppointments())
+            {
+                LocalDateTime apptStart = appt.getStart();
+                LocalDateTime apptEnd = appt.getEnd();
+                
+                if ((appt.getId() != Integer.parseInt(idTxt.getText()) &&
+                        !((startUTC.isBefore(apptStart) && endUTC.isBefore(apptStart)) 
+                        || !((startUTC.isAfter(apptEnd) && endUTC.isAfter(apptEnd))))))
+                {
+                    Alert("Please make sure your appointment is not overlapping with another one.");
+                    return false;
+                }
+            }
+        }
+        
+        
         return true;
         
     }

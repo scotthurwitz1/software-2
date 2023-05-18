@@ -4,6 +4,7 @@
  */
 package dao;
 
+import static Helper.util.toLocal;
 import Model.Appointment;
 import Model.Customer;
 import Model.Database;
@@ -35,11 +36,15 @@ public class AppointmentQuery {
             String description = rs.getString("Description");
             String location = rs.getString("Location");
             String type = rs.getString("Type");
-            LocalDateTime start = rs.getTimestamp("Start").toLocalDateTime();
-            LocalDateTime end = rs.getTimestamp("end").toLocalDateTime();
+//            LocalDateTime start = rs.getTimestamp("Start").toLocalDateTime();
+//            LocalDateTime end = rs.getTimestamp("End").toLocalDateTime();
+            LocalDateTime start = toLocal(rs.getTimestamp("Start"));
+            LocalDateTime end = toLocal(rs.getTimestamp("End"));
             int customerId = rs.getInt("Customer_ID");
             int contactId = rs.getInt("User_ID");
             int userId = rs.getInt("Contact_ID");
+            
+            System.out.println(start);
             
             Appointment appointment = new Appointment(id, title, description, location
                     , type, start, end, customerId, contactId, userId);

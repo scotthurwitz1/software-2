@@ -121,21 +121,10 @@ public abstract class util {
         ZonedDateTime zone = local.atZone(ZoneId.of(ZoneId.systemDefault().toString()));
         ZonedDateTime utc = zone.withZoneSameInstant(ZoneId.of("UTC"));
         LocalDateTime local1 = utc.toLocalDateTime();
-        String utc1 = local1.format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss"));
+        String utc1 = local1.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         return utc1;       
     }
-    
-    public static int toEST(String stamp)
-    {
-        Timestamp ex = Timestamp.valueOf(String.valueOf(stamp));
-        LocalDateTime local = ex.toLocalDateTime();
-        ZonedDateTime zone = local.atZone(ZoneId.of(ZoneId.systemDefault().toString()));
-        ZonedDateTime est = zone.withZoneSameInstant(ZoneId.of("US/Eastern"));
-        LocalDateTime local1 = est.toLocalDateTime();
-        int estHour = local1.getHour();
-        return estHour;  
-    }
-    
+
     public static void Alert(String text)
     {
         Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -156,6 +145,19 @@ public abstract class util {
     {
         System.out.println(ZoneId.systemDefault());
         ZoneId.getAvailableZoneIds().stream().filter(z->z.contains("America")).sorted().forEach(System.out::println);
+    }
+    
+    public static LocalDateTime toLocal(Timestamp stamp)
+    {
+        LocalDateTime utcLDT = stamp.toLocalDateTime();
+        ZoneId utcZoneId = ZoneId.of("UTC");
+        ZonedDateTime utcZDT = ZonedDateTime.of(utcLDT, utcZoneId);
+        
+        ZoneId myZoneID = ZoneId.systemDefault();
+        ZonedDateTime myZDT = ZonedDateTime.ofInstant(utcZDT.toInstant(), myZoneID);
+        
+        LocalDateTime local = myZDT.toLocalDateTime();
+        return local;       
     }
     
 //    public static void ZDT()
