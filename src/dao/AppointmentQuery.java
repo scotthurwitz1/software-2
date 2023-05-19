@@ -44,8 +44,6 @@ public class AppointmentQuery {
             int contactId = rs.getInt("User_ID");
             int userId = rs.getInt("Contact_ID");
             
-            System.out.println(start);
-            
             Appointment appointment = new Appointment(id, title, description, location
                     , type, start, end, customerId, contactId, userId);
             Database.addAppointment(appointment);

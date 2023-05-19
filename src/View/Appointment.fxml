@@ -22,13 +22,13 @@
           <TableColumn fx:id="idCol" prefWidth="75.0" text="ID" />
           <TableColumn fx:id="titleCol" prefWidth="75.0" text="Title" />
             <TableColumn fx:id="descripCol" prefWidth="95.33009338378906" text="Description" />
-            <TableColumn fx:id="locCol" prefWidth="115.66986083984375" text="Location" />
-            <TableColumn fx:id="typeCol" prefWidth="107.5096435546875" text="Type" />
-            <TableColumn fx:id="startDateTimeCol" prefWidth="119.3203125" text="Start Date/Time" />
-            <TableColumn fx:id="endDateTimeCol" prefWidth="105.771728515625" text="End Date/Time" />
-            <TableColumn fx:id="custIdCol" prefWidth="85.2764892578125" text="Customer ID" />
-            <TableColumn fx:id="contactIdCol" prefWidth="88.61151123046875" text="Contact Id" />
-            <TableColumn fx:id="userIdCol" prefWidth="112.55804443359375" text="User Id" />
+            <TableColumn fx:id="locCol" prefWidth="103.34140014648438" text="Location" />
+            <TableColumn fx:id="typeCol" prefWidth="108.65859985351562" text="Type" />
+            <TableColumn fx:id="startDateTimeCol" prefWidth="147.29949951171875" text="Start Date/Time" />
+            <TableColumn fx:id="endDateTimeCol" prefWidth="129.65869140625" text="End Date/Time" />
+            <TableColumn fx:id="custIdCol" prefWidth="82.35931396484375" text="Customer ID" />
+            <TableColumn fx:id="contactIdCol" prefWidth="83.93408203125" text="Contact Id" />
+            <TableColumn fx:id="userIdCol" prefWidth="84.06585693359375" text="User Id" />
         </columns>
       </TableView>
       <RadioButton fx:id="weekRadio" layoutX="622.0" layoutY="59.0" mnemonicParsing="false" onAction="#onActionWeekRadio" text="Week">
@@ -39,9 +39,10 @@
       <RadioButton fx:id="allApptsRadio" layoutX="862.0" layoutY="59.0" mnemonicParsing="false" onAction="#onActionAllApptsRadio" text="All Appointments" toggleGroup="$filterTG" />
       <GridPane layoutX="70.0" layoutY="541.0" prefHeight="223.0" prefWidth="334.0">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.52912902832031" minWidth="10.0" prefWidth="75.02428436279297" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="153.7427520751953" minWidth="10.0" prefWidth="118.47571563720703" />
-            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="153.7427520751953" minWidth="10.0" prefWidth="152.04857635498047" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="111.0" minWidth="10.0" prefWidth="94.5" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="153.7427520751953" minWidth="0.0" prefWidth="114.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="153.7427520751953" minWidth="10.0" prefWidth="62.5" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="153.7427520751953" minWidth="10.0" prefWidth="68.5" />
         </columnConstraints>
         <rowConstraints>
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -67,13 +68,14 @@
             <TextField fx:id="custIdTxt" GridPane.columnIndex="1" GridPane.rowIndex="6" />
             <Label text="Appt Details" />
             <Button fx:id="saveBtn" mnemonicParsing="false" onAction="#onActionSaveBtn" text="Save" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+            <Button fx:id="cancelBtn" mnemonicParsing="false" onAction="#onActionCancelBtn" text="Cancel" GridPane.columnIndex="3" GridPane.rowIndex="6" />
          </children>
       </GridPane>
       <GridPane layoutX="414.0" layoutY="582.0" prefHeight="178.0" prefWidth="268.0">
          <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="102.88909912109375" minWidth="10.0" prefWidth="100.3216552734375" />
-            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="153.7427520751953" minWidth="10.0" prefWidth="92.71624755859375" />
-            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="153.7427520751953" minWidth="10.0" prefWidth="79.78375244140625" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="102.88909912109375" minWidth="10.0" prefWidth="65.94912719726562" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="153.7427520751953" minWidth="10.0" prefWidth="133.85028076171875" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="153.7427520751953" minWidth="10.0" prefWidth="69.14971923828125" />
          </columnConstraints>
          <rowConstraints>
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -85,17 +87,17 @@
             <Label text="Start Date" />
             <Label text="Start Time" GridPane.rowIndex="1" />
             <Label text="Contact" GridPane.rowIndex="2" />
-            <DatePicker fx:id="startDate" onAction="#onActionStartDate" GridPane.columnIndex="1" />
-            <ComboBox fx:id="startTime" onAction="#onActionStartTime" prefHeight="26.0" prefWidth="79.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <DatePicker fx:id="startDate" onAction="#onActionStartDate" prefHeight="26.0" prefWidth="132.0" GridPane.columnIndex="1" />
+            <ComboBox fx:id="startTime" onAction="#onActionStartTime" prefHeight="26.0" prefWidth="79.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
             <ComboBox fx:id="contactCombo" onAction="#onActionContactCombo" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <ComboBox fx:id="startTime1" onAction="#onActionEndTime" prefHeight="26.0" prefWidth="78.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
          </children>
       </GridPane>
       <GridPane layoutX="709.0" layoutY="585.0" prefHeight="176.0" prefWidth="268.0">
          <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.52912902832031" minWidth="10.0" prefWidth="96.470458984375" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="153.7427520751953" minWidth="10.0" prefWidth="84.86328125" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="153.7427520751953" minWidth="10.0" prefWidth="99.13671875" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.52912902832031" minWidth="10.0" prefWidth="64.374267578125" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="153.7427520751953" minWidth="10.0" prefWidth="125.5838623046875" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="153.7427520751953" minWidth="10.0" prefWidth="80.4161376953125" />
          </columnConstraints>
          <rowConstraints>
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -108,7 +110,7 @@
             <Label text="End Time" GridPane.rowIndex="1" />
             <Label text="User Id" GridPane.rowIndex="2" />
             <DatePicker fx:id="endDate" onAction="#onActionEndDate" GridPane.columnIndex="1" />
-            <ComboBox fx:id="endTime" onAction="#onActionEndTime" prefHeight="26.0" prefWidth="68.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <ComboBox fx:id="endTime" onAction="#onActionEndTime" prefHeight="26.0" prefWidth="68.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
             <TextField fx:id="userIdTxt" onAction="#onActionUserIdTxt" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Button fx:id="backBtn" mnemonicParsing="false" onAction="#onActionBackBtn" prefWidth="54.0" text="Back" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <ComboBox fx:id="endTime1" onAction="#onActionEndTime" prefHeight="26.0" prefWidth="78.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
