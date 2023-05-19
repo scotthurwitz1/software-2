@@ -378,16 +378,9 @@ public class AppointmentController implements Initializable {
                 // the appointment start and end are before those of another appointment
                 // or after those of another appointment
                 if (
-                        !
-                        (Integer.toString(appt.getId()).equals(idTxt.getText())) 
-                        &&   
-                        !
-                        (
-                        (ldtStart.isBefore(apptStart) && !ldtEnd.isAfter(apptStart)) 
-                        || 
-                        (!ldtStart.isBefore(apptEnd) && ldtEnd.isAfter(apptEnd))
-                        )
-                        )
+                        !(Integer.toString(appt.getId()).equals(idTxt.getText())) 
+                        && !((ldtStart.isBefore(apptStart) && !ldtEnd.isAfter(apptStart)) || 
+                        (!ldtStart.isBefore(apptEnd) && ldtEnd.isAfter(apptEnd))))
                 {
                     Alert("Please make sure your appointment is not overlapping with another one.");
                     return false;
@@ -493,11 +486,18 @@ public class AppointmentController implements Initializable {
 
     @FXML
     void onActionModifyBtn(ActionEvent event) {
-        
-        Appointment appt = apptsTbl.getSelectionModel().getSelectedItem();
-        setValues(appt);
-        id = appt.getId();
-        addBtn.setDisable(true);
+        try {
+            Appointment appt = apptsTbl.getSelectionModel().getSelectedItem();
+            setValues(appt);
+            id = appt.getId();
+            addBtn.setDisable(true);
+            saveBtn.setDisable(false);
+            cancelBtn.setDisable(false);
+        }
+        catch(NullPointerException e)
+        {
+            Alert("No appointment selected");
+        }
 
     }
 
@@ -556,6 +556,9 @@ public class AppointmentController implements Initializable {
         
         ps.execute();
         
+        saveBtn.setDisable(true);
+        cancelBtn.setDisable(true);
+        
         if (checkTime() == false) {}
         else {refresh();}
 
@@ -608,6 +611,9 @@ public class AppointmentController implements Initializable {
         // 
         idTxt.setDisable(true);
         idTxt.setText("Auto Generated");
+        
+        saveBtn.setDisable(true);
+        cancelBtn.setDisable(true);
         
         startTime.setItems(hours);
         startTime1.setItems(mins);
