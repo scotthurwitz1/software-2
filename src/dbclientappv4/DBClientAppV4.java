@@ -43,7 +43,7 @@ public class DBClientAppV4 extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/View/Appointment.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/View/Login.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setTitle("My Java FX Menu");

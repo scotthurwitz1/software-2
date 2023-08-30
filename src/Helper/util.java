@@ -127,7 +127,7 @@ public abstract class util {
 
     public static void Alert(String text)
     {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
+        Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Warning Dialog");
         alert.setContentText(text);
         alert.showAndWait();
@@ -135,7 +135,7 @@ public abstract class util {
     
     public static void alertFR(String text)
     {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
+        Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Message d'Alerte");
         alert.setContentText(text);
         alert.showAndWait();

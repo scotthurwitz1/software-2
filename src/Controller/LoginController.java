@@ -80,7 +80,7 @@ public class LoginController implements Initializable {
             System.out.println(tz);
             if (tz.equals("America/New_York"))
             {
-                userLocationLbl.setText("White PLains, NY");
+                userLocationLbl.setText("White Plains, NY");
             } 
             else if (tz.equals("America/Phoenix"))
             {
