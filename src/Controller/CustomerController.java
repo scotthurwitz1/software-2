@@ -188,13 +188,14 @@ public class CustomerController implements Initializable {
     @FXML
     void onActionCountryCombo(ActionEvent event) {
         
-        if (countryCombo.getValue().equals("United States"))
-            stateCombo.setItems(getUsStates());
-        else if (countryCombo.getValue().equals("United Kingdom"))
-            stateCombo.setItems(getUkStates());
-        else if (countryCombo.getValue().equals("Canada"))
-            stateCombo.setItems(getCanadaStates());
-
+        if (countryCombo.getValue()!= null)
+            if(countryCombo.getValue().equals("United States"))
+                stateCombo.setItems(getUsStates());
+            else if (countryCombo.getValue().equals("United Kingdom"))
+                stateCombo.setItems(getUkStates());
+            else if (countryCombo.getValue().equals("Canada"))
+                stateCombo.setItems(getCanadaStates());
+        
     }
 
     @FXML
