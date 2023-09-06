@@ -82,6 +82,9 @@ public class AppointmentController implements Initializable {
     ObservableList<String> mins = FXCollections.observableArrayList(
     "00", "15", "30", "45");
     
+    ObservableList<Appointment> monthly = FXCollections.observableArrayList();
+    ObservableList<Appointment> weekly = FXCollections.observableArrayList();
+    
     int id = 0;
     String title;
     String descr;
@@ -199,6 +202,37 @@ public class AppointmentController implements Initializable {
     @FXML
     private RadioButton weekRadio;
     
+    void setMonthly() {
+        monthly.clear();
+        Month month = LocalDate.now().getMonth();
+        int year = LocalDate.now().getYear();
+        
+        getAllAppointments().forEach(appt -> {
+            if (appt.getStart().getMonth() == month && appt.getStart().getYear() == year)
+                {
+                    monthly.add(appt);
+                }
+        });
+        apptsTbl.setItems(monthly);
+    }
+    
+    void setWeekly() {
+        weekly.clear();
+        WeekFields weekFields = WeekFields.of(Locale.getDefault());
+        
+        LocalDate date = LocalDate.now();
+        int week = date.get(weekFields.weekOfWeekBasedYear());
+        int year = LocalDate.now().getYear();
+        
+        getAllAppointments().forEach(appt -> {
+            if (appt.getStart().get(weekFields.weekOfWeekBasedYear()) == week 
+                    && appt.getStart().getYear() == year)
+                {
+                    weekly.add(appt);
+                }
+        }); 
+    }
+    
     void pullValues()
     {
         String startDate1 = startDate.getValue().format(yearMonthDay);
@@ -281,9 +315,19 @@ public class AppointmentController implements Initializable {
         addBtn.setDisable(false);
 
         appointmentsQuery();
-        apptsTbl.setItems(Database.getAllAppointments()); 
         
-
+        if (monthRadio.isSelected()){
+            setMonthly();
+            apptsTbl.setItems(monthly);
+        }
+        else if (weekRadio.isSelected())
+        {
+            setWeekly();
+            apptsTbl.setItems(weekly);
+        } else 
+        {
+            apptsTbl.setItems(Database.getAllAppointments()); 
+        }
     }
     
     boolean checkTime()
@@ -465,7 +509,7 @@ public class AppointmentController implements Initializable {
             id = appt.getId();
             type = appt.getType();
 
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Confirm delete appointment #" + id + "?");
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Confirm delete " + type + " #" + id + "?");
             Optional<ButtonType> result = alert.showAndWait();
             if(result.isPresent() && result.get() == ButtonType.OK)
             {
@@ -510,22 +554,9 @@ public class AppointmentController implements Initializable {
     }
 
     @FXML
-    void onActionMonthRadio(ActionEvent event) {
-        
-        ObservableList<Appointment> monthly = FXCollections.observableArrayList();
-        
-        Month month = LocalDate.now().getMonth();
-        int year = LocalDate.now().getYear();
-        
-        getAllAppointments().forEach(appt -> {
-            if (appt.getStart().getMonth() == month && appt.getStart().getYear() == year)
-                {
-                    monthly.add(appt);
-                }
-        });
-        
+    void onActionMonthRadio(ActionEvent event) { 
+        setMonthly();
         apptsTbl.setItems(monthly);
-
     }
     
     @FXML
@@ -590,24 +621,8 @@ public class AppointmentController implements Initializable {
 
     @FXML
     void onActionWeekRadio(ActionEvent event) {
-        
-        ObservableList<Appointment> weekly = FXCollections.observableArrayList();
-        WeekFields weekFields = WeekFields.of(Locale.getDefault());
-        
-        LocalDate date = LocalDate.now();
-        int week = date.get(weekFields.weekOfWeekBasedYear());
-        int year = LocalDate.now().getYear();
-        
-        getAllAppointments().forEach(appt -> {
-            if (appt.getStart().get(weekFields.weekOfWeekBasedYear()) == week 
-                    && appt.getStart().getYear() == year)
-                {
-                    weekly.add(appt);
-                }
-        });
-        
+        setWeekly();
         apptsTbl.setItems(weekly);
-
     }
     
     
