@@ -6,7 +6,7 @@ package Controller;
 
 import Helper.Switcher;
 import Helper.util;
-import static Helper.util.Alert;
+import static Helper.util.Error;
 import static Helper.util.idsStates;
 import static Helper.util.statesCountries;
 import static Helper.util.statesIds;
@@ -55,6 +55,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import java.util.Optional;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 
 /**
  * FXML Controller class
@@ -323,7 +326,7 @@ public class AppointmentController implements Initializable {
         //check appt day
         if (startDay < mon || startDay>fri || endDay < mon || endDay > fri)
         {
-            Alert("Please select a day within our hours of operation: "
+            Error("Please select a day within our hours of operation: "
                     + "Mon-Fri");
             return false;
         }
@@ -331,45 +334,45 @@ public class AppointmentController implements Initializable {
         else if (estStartTime.isBefore(open) || estStartTime.isAfter(close) 
                 || estEndTime.isBefore(open) || estEndTime.isAfter(close))
         {
-            Alert("Please select a time within our hours of operation: "
+            Error("Please select a time within our hours of operation: "
                     + "8am to 10pm");
             return false;
         }
         //check appointment positive duration 
         else if (estStartTime.isAfter(estEndTime) || estStartTime.equals(estEndTime))
         {
-            Alert("Please make sure the appointment start time is "
+            Error("Please make sure the appointment start time is "
                     + "before the end time");
             return false;
         }
 //        check if appointments are overlapping
         else
         {
-            System.out.println(getAllAppointments());
+//            System.out.println(getAllAppointments());
             for (Appointment appt: getAllAppointments())
             {
                 LocalDateTime apptStart = appt.getStart();
                 LocalDateTime apptEnd = appt.getEnd();
                 
-                System.out.println(appt);
-                System.out.println(apptStart);
-                System.out.println(apptEnd);
-                System.out.println(ldtStart);
-                System.out.println(ldtEnd);
+//                System.out.println(appt);
+//                System.out.println(apptStart);
+//                System.out.println(apptEnd);
+//                System.out.println(ldtStart);
+//                System.out.println(ldtEnd);
                 if (ldtStart.isBefore(apptStart) && ldtEnd.isBefore(apptStart))
                 {
-                    System.out.println("true1");
+//                    System.out.println("true1");
                 }
                 
                 if ((ldtStart.isAfter(apptEnd) && ldtEnd.isAfter(apptEnd)))
                 {
-                    System.out.println("true2");
+//                    System.out.println("true2");
                 }
                 if (Integer.toString(appt.getId()).equals(idTxt.getText()))
                 {
-                    System.out.println(Integer.toString(appt.getId()));
-                    System.out.println(idTxt.getText());
-                    System.out.println("true0");
+//                    System.out.println(Integer.toString(appt.getId()));
+//                    System.out.println(idTxt.getText());
+//                    System.out.println("true0");
                 }
 
                 // if the appointment id is not equal to another appointments id
@@ -382,7 +385,7 @@ public class AppointmentController implements Initializable {
                         && !((ldtStart.isBefore(apptStart) && !ldtEnd.isAfter(apptStart)) || 
                         (!ldtStart.isBefore(apptEnd) && ldtEnd.isAfter(apptEnd))))
                 {
-                    Alert("Please make sure your appointment is not overlapping with another one.");
+                    Error("Please make sure your appointment is not overlapping with another one.");
                     return false;
                 }
             }
@@ -397,7 +400,7 @@ public class AppointmentController implements Initializable {
     void onActionAddBtn(ActionEvent event) throws SQLException {
         
         if (checkTime() == false) {
-            System.out.println("hi");
+//            System.out.println("hi");
             return;
         }
         
@@ -456,21 +459,28 @@ public class AppointmentController implements Initializable {
     @FXML
     void onActionDeleteBtn(ActionEvent event) throws SQLException {
         
-        Appointment appt = apptsTbl.getSelectionModel().getSelectedItem();
-        id = appt.getId();
-        type = appt.getType();
-        
-        String sql = "DELETE FROM appointments" 
+        try
+        {
+            Appointment appt = apptsTbl.getSelectionModel().getSelectedItem();
+            id = appt.getId();
+            type = appt.getType();
+
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Confirm delete appointment #" + id + "?");
+            Optional<ButtonType> result = alert.showAndWait();
+            if(result.isPresent() && result.get() == ButtonType.OK)
+            {
+                String sql = "DELETE FROM appointments" 
                 + " WHERE Appointment_ID = ?";    
-        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-        ps.setInt(1, id);
-        
-        ps.execute();
-        
-        refresh();
-        
-        Alert("The " + type + ", appointment ID: " + Integer.valueOf(id) + " has been "
-                + "successfully cancelled");
+                PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+                ps.setInt(1, id);
+                ps.execute();
+                refresh();
+            }  
+        }
+        catch(NullPointerException e)
+        {  
+            Error("No appointment selected.");
+        }
 
     }
 
@@ -489,14 +499,12 @@ public class AppointmentController implements Initializable {
         try {
             Appointment appt = apptsTbl.getSelectionModel().getSelectedItem();
             setValues(appt);
-            id = appt.getId();
-            addBtn.setDisable(true);
             saveBtn.setDisable(false);
             cancelBtn.setDisable(false);
         }
         catch(NullPointerException e)
         {
-            Alert("No appointment selected");
+            Error("No appointment selected");
         }
 
     }
@@ -531,7 +539,7 @@ public class AppointmentController implements Initializable {
     void onActionSaveBtn(ActionEvent event) throws SQLException {
         
         pullValues();
-        
+        id = Integer.parseInt(idTxt.getText());
         String sql = "UPDATE appointments SET Title = ?, " 
                 + "Description = ?, Location = ?, Type = ?, Start = ?, End = ?, "
                 + "Create_Date = ?, Created_By = ?, Last_Update = ?, Last_Updated_By = ?,"
