@@ -6,6 +6,8 @@ package Controller;
 
 import Helper.Switcher;
 import Helper.util;
+import static Helper.util.Error;
+import static Helper.util.Warning;
 import static Helper.util.countriesIds;
 import static Helper.util.getCanadaStates;
 import static Helper.util.getUkStates;
@@ -24,6 +26,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.sql.Timestamp;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -32,7 +35,9 @@ import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -200,21 +205,28 @@ public class CustomerController implements Initializable {
 
     @FXML
     void onActionDeleteBtn(ActionEvent event) throws SQLException {
-        
-        Customer cust = recordsTbl.getSelectionModel().getSelectedItem();
-        id = cust.getId();
-        
-        
-        String sql = "DELETE FROM customers" 
+        try
+        {
+            Customer cust = recordsTbl.getSelectionModel().getSelectedItem();
+            id = cust.getId();
+            name = cust.getName();
+
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Confirm delete " + name + "?");
+            Optional<ButtonType> result = alert.showAndWait();
+            if(result.isPresent() && result.get() == ButtonType.OK)
+            {
+                String sql = "DELETE FROM customers" 
                 + " WHERE Customer_ID = ?";    
-        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-        ps.setInt(1, id);
-        
-        ps.execute();
-        
-        refresh();
-        
-        
+                PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+                ps.setInt(1, id);
+                ps.execute();
+                refresh();
+            }  
+        }
+        catch(NullPointerException e)
+        {  
+            Error("No customer selected.");
+        }
 
     }
 
