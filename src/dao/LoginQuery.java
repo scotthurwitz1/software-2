@@ -99,7 +99,7 @@ public static boolean selectLoginCreds(String userId, String password) throws SQ
     else {
     if (!rs.isBeforeFirst()) 
         {    
-           util.Alert("Incorrect username or password");
+           util.Error("Incorrect username or password");
            return false;
         } 
     else 
