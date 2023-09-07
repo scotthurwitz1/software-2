@@ -112,7 +112,7 @@ public class LoginController implements Initializable {
             {
                 userLocationLbl.setText("Phoenix, AZ");
             }
-            else if (tz.equals("England/London"))
+            else if (tz.equals("Europe/London"))
             {
                 userLocationLbl.setText("London, England");
             }
