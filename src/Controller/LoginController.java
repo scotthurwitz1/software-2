@@ -16,9 +16,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import Helper.Switcher;
+import static Helper.util.Warning;
 import Model.Appointment;
 import static Model.Database.getAllAppointments;
 import Model.User;
+import java.time.LocalDateTime;
 
 public class LoginController implements Initializable {
     public static User current_user = new User(); 
@@ -48,6 +50,7 @@ public class LoginController implements Initializable {
     
     @FXML
     void onActionLoginBtn(ActionEvent event) throws SQLException, IOException {   
+        boolean appts = false;
         if (LoginQuery.selectLoginCreds( usernameTxt.getText(), passwordTxt.getText()))
         {
             switcher.screen("/View/MainMenu.fxml", event);
@@ -55,9 +58,21 @@ public class LoginController implements Initializable {
             {
                 if (appt.getUserId() == current_user.getUserId())
                 {
-                    
-                }
+                     LocalDateTime apptStart = appt.getStart();
+                     LocalDateTime now = LocalDateTime.now();
+                     LocalDateTime future = now.plusMinutes(15);
+                     
+                     if (!apptStart.isBefore(now)&& !apptStart.isAfter(future))
+                     {
+                         Warning("Appointment #" + appt.getId() + " is on " + appt.getStart().toLocalDate()
+                         + " at " + appt.getStart().toLocalTime());
+                         appts = true;
+                     } 
+                } 
             }
+        }
+        if (appts == false) {
+            Warning("User " + current_user.getUserName() + " has no appointments right now.");
         }
     }
 

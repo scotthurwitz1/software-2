@@ -109,6 +109,7 @@ public static boolean selectLoginCreds(String userId, String password) throws SQ
             rs.next();
             System.out.println("User found");
             current_user.setUserId(rs.getInt(1));
+            current_user.setUserName(rs.getString(2));
             return true;
         }
     }
