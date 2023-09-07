@@ -34,6 +34,9 @@ public class LoginController implements Initializable {
     private Label usernameLbl;
     
     @FXML
+    private Label loginLbl;
+    
+    @FXML
     private Label passwordLbl;
 
     @FXML
@@ -70,10 +73,10 @@ public class LoginController implements Initializable {
                      } 
                 } 
             }
-        }
-        if (appts == false) {
-            Warning("User " + current_user.getUserName() + " has no appointments right now.");
-        }
+            if (appts == false) {
+                Warning("User " + current_user.getUserName() + " has no appointments right now.");
+            }
+        }  
     }
 
     @FXML
@@ -97,6 +100,8 @@ public class LoginController implements Initializable {
                 usernameLbl.setText(rb.getString("Username"));
                 passwordLbl.setText(rb.getString("Password"));
                 locationLbl.setText(rb.getString("Location"));
+                loginLbl.setText(rb.getString("Login"));
+                loginBtn.setText(rb.getString("Login"));
                 userLocationLbl.setText("Montréal, QC");
             } 
         }
