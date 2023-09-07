@@ -6,6 +6,8 @@ package Helper;
 
 import Controller.CustomerController;
 import Model.Customer;
+import Model.Database;
+import static dao.AppointmentQuery.appointmentsQuery;
 import static dao.ContactQuery.contactsQuery;
 import dao.JDBC;
 import java.io.IOException;
@@ -67,11 +69,11 @@ public abstract class util {
     }
     
     public static void initUtil() throws SQLException {
+        Database database = new Database();
         
-        
-        
-        //contacts query
+        //queries
         contactsQuery();
+        appointmentsQuery();
         
         //country Ids
         countriesIds.put("United States", 1);
@@ -125,9 +127,17 @@ public abstract class util {
         return utc1;       
     }
 
-    public static void Alert(String text)
+    public static void Error(String text)
     {
         Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error Dialog");
+        alert.setContentText(text);
+        alert.showAndWait();
+    }
+    
+    public static void Warning(String text)
+    {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Warning Dialog");
         alert.setContentText(text);
         alert.showAndWait();

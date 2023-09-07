@@ -297,8 +297,7 @@ public class AppointmentController implements Initializable {
      // clear fields and refresh table
     void refresh() throws SQLException
     {   
-        
-        idTxt.clear();
+        idTxt.setText("Auto Generated");
         titleTxt.clear();
         descriptionTxt.clear();
         locationTxt.clear();
@@ -313,6 +312,8 @@ public class AppointmentController implements Initializable {
         userIdTxt.clear();
         contactCombo.setValue(null);
         addBtn.setDisable(false);
+        saveBtn.setDisable(true);
+        cancelBtn.setDisable(true);
 
         appointmentsQuery();
         
@@ -329,127 +330,12 @@ public class AppointmentController implements Initializable {
             apptsTbl.setItems(Database.getAllAppointments()); 
         }
     }
-    
-    boolean checkTime()
-    {   
-        //format start/end dates and times
-        String apptStartDate = startDate.getValue().format(yearMonthDay);
-        String apptStartTime = startTime.getValue()+":"+startTime1.getValue();
-        
-        String apptEndDate = endDate.getValue().format(yearMonthDay);
-        String apptEndTime = endTime.getValue()+":"+endTime1.getValue();
-        
-        //convert to utc 
-        LocalDateTime startUTC = LocalDateTime.parse(toUTC(apptStartDate + " " + apptStartTime + ":00"), all);
-        LocalDateTime endUTC = LocalDateTime.parse(toUTC(apptEndDate + " " + apptEndTime + ":00"), all);
-
-        LocalTime ltStart = LocalTime.parse(apptStartTime, hourMin);
-        LocalTime ltEnd = LocalTime.parse(apptEndTime, hourMin);
-        //create LocalDateTime objects
-        LocalDateTime ldtStart = LocalDateTime.of(startDate.getValue(), ltStart);
-        LocalDateTime ldtEnd = LocalDateTime.of(endDate.getValue(), ltEnd);
-        
-        ZonedDateTime zdtStart = ZonedDateTime.of(ldtStart,ZoneId.systemDefault());
-        ZonedDateTime zdtEnd = ZonedDateTime.of(ldtEnd,ZoneId.systemDefault());
-        //create Eastern time objects
-        ZonedDateTime estStart = zdtStart.withZoneSameInstant(ZoneId.of("America/New_York"));
-        ZonedDateTime estEnd = zdtEnd.withZoneSameInstant(ZoneId.of("America/New_York"));
-        
-        int startDay = estStart.getDayOfWeek().getValue();
-        int endDay = estEnd.getDayOfWeek().getValue();
-        //get day of week
-        int mon = DayOfWeek.MONDAY.getValue();
-        int fri = DayOfWeek.FRIDAY.getValue();
-        
-        LocalTime open = LocalTime.of(8,0,0);
-        LocalTime close = LocalTime.of(22,0,0);
-        //get time of day
-        LocalTime estStartTime = estStart.toLocalTime();
-        LocalTime estEndTime = estEnd.toLocalTime();
-        
-        //check appt day
-        if (startDay < mon || startDay>fri || endDay < mon || endDay > fri)
-        {
-            Error("Please select a day within our hours of operation: "
-                    + "Mon-Fri");
-            return false;
-        }
-        //check appt time
-        else if (estStartTime.isBefore(open) || estStartTime.isAfter(close) 
-                || estEndTime.isBefore(open) || estEndTime.isAfter(close))
-        {
-            Error("Please select a time within our hours of operation: "
-                    + "8am to 10pm");
-            return false;
-        }
-        //check appointment positive duration 
-        else if (estStartTime.isAfter(estEndTime) || estStartTime.equals(estEndTime))
-        {
-            Error("Please make sure the appointment start time is "
-                    + "before the end time");
-            return false;
-        }
-//        check if appointments are overlapping
-        else
-        {
-//            System.out.println(getAllAppointments());
-            for (Appointment appt: getAllAppointments())
-            {
-                LocalDateTime apptStart = appt.getStart();
-                LocalDateTime apptEnd = appt.getEnd();
-                
-//                System.out.println(appt);
-//                System.out.println(apptStart);
-//                System.out.println(apptEnd);
-//                System.out.println(ldtStart);
-//                System.out.println(ldtEnd);
-                if (ldtStart.isBefore(apptStart) && ldtEnd.isBefore(apptStart))
-                {
-//                    System.out.println("true1");
-                }
-                
-                if ((ldtStart.isAfter(apptEnd) && ldtEnd.isAfter(apptEnd)))
-                {
-//                    System.out.println("true2");
-                }
-                if (Integer.toString(appt.getId()).equals(idTxt.getText()))
-                {
-//                    System.out.println(Integer.toString(appt.getId()));
-//                    System.out.println(idTxt.getText());
-//                    System.out.println("true0");
-                }
-
-                // if the appointment id is not equal to another appointments id
-                // check:
-                // the following is false: 
-                // the appointment start and end are before those of another appointment
-                // or after those of another appointment
-                if (
-                        !(Integer.toString(appt.getId()).equals(idTxt.getText())) 
-                        && !((ldtStart.isBefore(apptStart) && !ldtEnd.isAfter(apptStart)) || 
-                        (!ldtStart.isBefore(apptEnd) && ldtEnd.isAfter(apptEnd))))
-                {
-                    Error("Please make sure your appointment is not overlapping with another one.");
-                    return false;
-                }
-            }
-        }
-        
-        
-        return true;
-        
-    }
 
     @FXML
     void onActionAddBtn(ActionEvent event) throws SQLException {
         
-        if (checkTime() == false) {
-//            System.out.println("hi");
-            return;
-        }
-        
-        else {
-            
+        if (checkTime() != false) 
+        {
             pullValues();
 
             String sql = "INSERT INTO appointments (Title, "
@@ -476,9 +362,7 @@ public class AppointmentController implements Initializable {
 
 
             refresh();
-           
         }
-
     }
 
     @FXML
@@ -543,6 +427,7 @@ public class AppointmentController implements Initializable {
         try {
             Appointment appt = apptsTbl.getSelectionModel().getSelectedItem();
             setValues(appt);
+            addBtn.setDisable(true);
             saveBtn.setDisable(false);
             cancelBtn.setDisable(false);
         }
@@ -665,5 +550,96 @@ public class AppointmentController implements Initializable {
         
 
     }    
+    
+     boolean checkTime()
+    {   
+        //format start/end dates and times
+        String apptStartDate = startDate.getValue().format(yearMonthDay);
+        String apptStartTime = startTime.getValue()+":"+startTime1.getValue();
+        
+        String apptEndDate = endDate.getValue().format(yearMonthDay);
+        String apptEndTime = endTime.getValue()+":"+endTime1.getValue();
+        
+        //convert to utc 
+        LocalDateTime startUTC = LocalDateTime.parse(toUTC(apptStartDate + " " + apptStartTime + ":00"), all);
+        LocalDateTime endUTC = LocalDateTime.parse(toUTC(apptEndDate + " " + apptEndTime + ":00"), all);
+
+        LocalTime ltStart = LocalTime.parse(apptStartTime, hourMin);
+        LocalTime ltEnd = LocalTime.parse(apptEndTime, hourMin);
+        //create LocalDateTime objects
+        LocalDateTime ldtStart = LocalDateTime.of(startDate.getValue(), ltStart);
+        LocalDateTime ldtEnd = LocalDateTime.of(endDate.getValue(), ltEnd);
+        
+        ZonedDateTime zdtStart = ZonedDateTime.of(ldtStart,ZoneId.systemDefault());
+        ZonedDateTime zdtEnd = ZonedDateTime.of(ldtEnd,ZoneId.systemDefault());
+        //create Eastern time objects
+        ZonedDateTime estStart = zdtStart.withZoneSameInstant(ZoneId.of("America/New_York"));
+        ZonedDateTime estEnd = zdtEnd.withZoneSameInstant(ZoneId.of("America/New_York"));
+        
+        int startDay = estStart.getDayOfWeek().getValue();
+        int endDay = estEnd.getDayOfWeek().getValue();
+        //get day of week
+        int mon = DayOfWeek.MONDAY.getValue();
+        int fri = DayOfWeek.FRIDAY.getValue();
+        
+        LocalTime open = LocalTime.of(8,0,0);
+        LocalTime close = LocalTime.of(22,0,0);
+        //get time of day
+        LocalTime estStartTime = estStart.toLocalTime();
+        LocalTime estEndTime = estEnd.toLocalTime();
+        
+        //check appt day
+        if (startDay < mon || startDay>fri || endDay < mon || endDay > fri)
+        {
+            Error("Please select a day within our hours of operation: "
+                    + "Mon-Fri");
+            return false;
+        }
+        
+        //check appt time
+        else if (estStartTime.isBefore(open) || estStartTime.isAfter(close) 
+                || estEndTime.isBefore(open) || estEndTime.isAfter(close))
+        {
+            Error("Please select a time within our hours of operation: "
+                    + "8am to 10pm");
+            return false;
+        }
+        
+        //check appointment positive duration 
+        else if (estStartTime.isAfter(estEndTime) || estStartTime.equals(estEndTime))
+        {
+            Error("Please make sure the appointment start time is "
+                    + "before the end time");
+            return false;
+        }
+        
+//        check if appointments are overlapping
+        else
+        {
+            for (Appointment appt: getAllAppointments())
+            {
+                
+                if(!(Integer.toString(appt.getId()).equals(idTxt.getText())))
+                {
+                    
+                    LocalDateTime apptStart = appt.getStart();
+                    LocalDateTime apptEnd = appt.getEnd();
+
+                    if (
+                            (ldtStart.isBefore(apptStart) && ldtEnd.isAfter(apptStart)) || 
+                            (ldtStart.isBefore(apptEnd) && ldtEnd.isAfter(apptEnd)) ||
+                            (ldtStart.isAfter(apptEnd) && ldtEnd.isBefore(apptEnd)) ||
+                            ldtStart.equals(apptStart) || 
+                            ldtEnd.equals(apptEnd)
+                       )
+                    {
+                        Error("Please make sure your appointment is not overlapping with another one.");
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;  
+    }
     
 }

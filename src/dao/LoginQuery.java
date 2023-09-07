@@ -4,6 +4,8 @@
  */
 package dao;
 
+import Controller.LoginController;
+import static Controller.LoginController.current_user;
 import Helper.util;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -83,20 +85,20 @@ public static boolean selectLoginCreds(String userId, String password) throws SQ
     ResultSet rs = ps.executeQuery();
 
 
-    if (Locale.getDefault().getLanguage().equals("fr"))
-    {
-        if (!rs.isBeforeFirst()) 
-        {   
-            util.alertFR("Identifiant ou mot de passe incorrect");
-            return false;
-        } 
-        else 
-        {
-            System.out.println("User found");
-            return true;
-        }
-    }
-    else {
+//    if (Locale.getDefault().getLanguage().equals("fr"))
+//    {
+//        if (!rs.isBeforeFirst()) 
+//        {   
+//            util.alertFR("Identifiant ou mot de passe incorrect");
+//            return false;
+//        } 
+//        else 
+//        {
+//            System.out.println("User found");
+//            return true;
+//        }
+//    }
+//    else {
     if (!rs.isBeforeFirst()) 
         {    
            util.Error("Incorrect username or password");
@@ -104,14 +106,16 @@ public static boolean selectLoginCreds(String userId, String password) throws SQ
         } 
     else 
         {
+            rs.next();
             System.out.println("User found");
+            current_user.setUserId(rs.getInt(1));
             return true;
         }
     }
     
-   }
+}
     
 
 
-}
+
 

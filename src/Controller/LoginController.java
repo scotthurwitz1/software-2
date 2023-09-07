@@ -16,8 +16,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import Helper.Switcher;
+import Model.Appointment;
+import static Model.Database.getAllAppointments;
+import Model.User;
 
 public class LoginController implements Initializable {
+    public static User current_user = new User(); 
     
     Switcher switcher = new Switcher();
 
@@ -47,6 +51,13 @@ public class LoginController implements Initializable {
         if (LoginQuery.selectLoginCreds( usernameTxt.getText(), passwordTxt.getText()))
         {
             switcher.screen("/View/MainMenu.fxml", event);
+            for (Appointment appt: getAllAppointments())
+            {
+                if (appt.getUserId() == current_user.getUserId())
+                {
+                    
+                }
+            }
         }
     }
 

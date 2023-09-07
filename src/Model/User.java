@@ -29,6 +29,16 @@ public class User {
         this.lastUpdatedBy = lastUpdatedBy;
     }
 
+    public User() {
+        this.userId = 0;
+        this.userName = "";
+        this.password = "";
+        this.createDate = null;
+        this.createdBy = "";
+        this.lastUpdate = null;
+        this.lastUpdatedBy = "";
+    }
+
     /**
      * @return the userId
      */
