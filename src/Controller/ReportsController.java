@@ -29,6 +29,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Pair;
 
 /**
@@ -80,7 +81,7 @@ public class ReportsController implements Initializable {
     private TableColumn<?, ?> titleCol;
 
     @FXML
-    private TableColumn<?, ?> typeCol;
+    private TableColumn<CountObj, String> typeCol;
     
     @FXML
     private TableView countryTable;
@@ -97,7 +98,7 @@ public class ReportsController implements Initializable {
     @FXML
     private Button backBtn;
     
-        @FXML
+    @FXML
     void backBtnAction(ActionEvent event) throws IOException {
         switcher.screen("/View/MainMenu.fxml", event);
     }
@@ -131,11 +132,16 @@ public class ReportsController implements Initializable {
             ATCountObjs.add(new CountObj(type, count));
         }
         
-//        for (CountObj obj: ATCountObjs)
-//        {
-//            System.out.print(obj.getType());
-//            System.out.print(obj.getCount());
-//        }
+        for (CountObj obj:ATCountObjs)
+        {
+            System.out.println(obj.getType());
+            System.out.println(obj.getCount());
+        }  
+        
+        typeTable.setItems(ATCountObjs);
+        typeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
+        numCol1.setCellValueFactory(new PropertyValueFactory<>("count"));
+        typeTable.refresh();
         
         // count appts/month
         ObservableList<CountObj> AMCountObjs = FXCollections.observableArrayList();
@@ -154,6 +160,10 @@ public class ReportsController implements Initializable {
             AMCountObjs.add(new CountObj(month, count));
         }
         
+        monthTable.setItems(AMCountObjs);
+        monthCol.setCellValueFactory(new PropertyValueFactory<>("month"));
+        numCol2.setCellValueFactory(new PropertyValueFactory<>("count"));
+        
         // count cust/country
         ObservableList<CountObj> CCountObjs = FXCollections.observableArrayList();
         Set<String> countrySet = new HashSet<>();
@@ -170,12 +180,15 @@ public class ReportsController implements Initializable {
             CCountObjs.add(new CountObj(country, count));
         }
         
+        countryTable.setItems(CCountObjs);
+        countryCol.setCellValueFactory(new PropertyValueFactory<>("type"));
+        numCol3.setCellValueFactory(new PropertyValueFactory<>("count"));
+        
         for (CountObj obj:CCountObjs)
         {
             System.out.println(obj.getType());
             System.out.println(obj.getCount());
-        }
+        }   
         
     }    
-
 }
