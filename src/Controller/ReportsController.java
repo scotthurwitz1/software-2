@@ -66,7 +66,7 @@ public class ReportsController implements Initializable {
     private ComboBox<?> nameCombo;
 
     @FXML
-    private TableColumn<?, ?> numCol1;
+    private TableColumn<?, ?> numCol11;
 
     @FXML
     private TableColumn<?, ?> numCol2;
@@ -81,7 +81,7 @@ public class ReportsController implements Initializable {
     private TableColumn<?, ?> titleCol;
 
     @FXML
-    private TableColumn<CountObj, String> typeCol;
+    private TableColumn<?, ?> typeCol1;
     
     @FXML
     private TableView countryTable;
@@ -93,7 +93,7 @@ public class ReportsController implements Initializable {
     private TableView schedTable;
     
     @FXML
-    private TableView typeTable;
+    private TableView typeTable1;
     
     @FXML
     private Button backBtn;
@@ -138,10 +138,9 @@ public class ReportsController implements Initializable {
             System.out.println(obj.getCount());
         }  
         
-        typeTable.setItems(ATCountObjs);
-        typeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
-        numCol1.setCellValueFactory(new PropertyValueFactory<>("count"));
-        typeTable.refresh();
+        typeTable1.setItems(ATCountObjs);
+        typeCol1.setCellValueFactory(new PropertyValueFactory<>("type"));
+        numCol11.setCellValueFactory(new PropertyValueFactory<>("count"));
         
         // count appts/month
         ObservableList<CountObj> AMCountObjs = FXCollections.observableArrayList();

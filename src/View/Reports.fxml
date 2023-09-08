@@ -24,10 +24,10 @@
                             <TableColumn fx:id="numCol2" prefWidth="152.0" text="Number of Appts" />
                           </columns>
                         </TableView>
-                        <TableView fx:id="typeTable" layoutX="64.0" layoutY="42.0" prefHeight="239.0" prefWidth="312.0">
+                        <TableView fx:id="typeTable1" layoutX="84.0" layoutY="42.0" prefHeight="239.0" prefWidth="312.0">
                            <columns>
-                              <TableColumn fx:id="typeCol" prefWidth="158.83303833007812" text="Appt Type" />
-                              <TableColumn fx:id="numCol1" prefWidth="152.0" text="Number of Appts" />
+                              <TableColumn fx:id="typeCol1" prefWidth="158.83303833007812" text="Appt Type" />
+                              <TableColumn fx:id="numCol11" prefWidth="152.0" text="Number of Appts" />
                            </columns>
                         </TableView>
                      </children></AnchorPane>

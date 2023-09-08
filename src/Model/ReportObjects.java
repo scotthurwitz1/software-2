@@ -12,8 +12,6 @@ import java.time.Month;
  */
 public class ReportObjects {
     
-    
-    
     public static class CountObj {
         private String type;
         private Long count;
