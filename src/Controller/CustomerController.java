@@ -4,6 +4,7 @@
  */
 package Controller;
 
+import static Controller.LoginController.current_user;
 import Helper.Switcher;
 import Helper.util;
 import static Helper.util.Error;
@@ -15,8 +16,10 @@ import static Helper.util.getUsStates;
 import static Helper.util.statesIds;
 import static Helper.util.idsStates;
 import static Helper.util.statesCountries;
+import Model.Appointment;
 import Model.Customer;
 import Model.Database;
+import static Model.Database.getAllAppointments;
 import static dao.CustomerQuery.customersQuery;
 import dao.JDBC;
 import java.io.IOException;
@@ -215,6 +218,15 @@ public class CustomerController implements Initializable {
             Optional<ButtonType> result = alert.showAndWait();
             if(result.isPresent() && result.get() == ButtonType.OK)
             {
+                for (Appointment appt: getAllAppointments())
+                {
+                    if (appt.getUserId() == id)
+                    {
+                        Warning("Customer has active appointments scheduled and cannot be deleted.");
+                        return;
+                    } 
+                }
+                System.out.println("hi");
                 String sql = "DELETE FROM customers" 
                 + " WHERE Customer_ID = ?";    
                 PreparedStatement ps = JDBC.connection.prepareStatement(sql);
@@ -296,8 +308,6 @@ public class CustomerController implements Initializable {
         } catch (SQLException ex) {
             Logger.getLogger(CustomerController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        System.out.println(Database.getAllCustomers());
         
         recordsTbl.setItems(Database.getAllCustomers());
         
