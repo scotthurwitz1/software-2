@@ -44,8 +44,8 @@ public class MainMenuController implements Initializable {
     }
 
     @FXML
-    void onActionReportBtn(ActionEvent event) {
-
+    void onActionReportBtn(ActionEvent event) throws IOException {
+       switcher.screen("/View/Reports.fxml", event);
     }
 
     /**
