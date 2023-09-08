@@ -5,8 +5,12 @@
 package Controller;
 
 import Helper.Switcher;
+import static Helper.util.statesCountries;
 import Model.Appointment;
+import Model.Customer;
+import Model.Database;
 import static Model.Database.getAllAppointments;
+import static Model.Database.getAllCustomers;
 import Model.ReportObjects;
 import Model.ReportObjects.CountObj;
 import java.io.IOException;
@@ -127,11 +131,11 @@ public class ReportsController implements Initializable {
             ATCountObjs.add(new CountObj(type, count));
         }
         
-        for (CountObj obj: ATCountObjs)
-        {
-            System.out.print(obj.getType());
-            System.out.print(obj.getCount());
-        }
+//        for (CountObj obj: ATCountObjs)
+//        {
+//            System.out.print(obj.getType());
+//            System.out.print(obj.getCount());
+//        }
         
         // count appts/month
         ObservableList<CountObj> AMCountObjs = FXCollections.observableArrayList();
@@ -145,11 +149,33 @@ public class ReportsController implements Initializable {
         for (Month month: monthSet)
         {
             long count = getAllAppointments().stream()
-                    .filter(a -> a.getStart().getMonth() == month)
+                    .filter(m -> m.getStart().getMonth() == month)
                     .count();
             AMCountObjs.add(new CountObj(month, count));
         }
+        
+        // count cust/country
+        ObservableList<CountObj> CCountObjs = FXCollections.observableArrayList();
+        Set<String> countrySet = new HashSet<>();
+        
+        countrySet.add("United States");
+        countrySet.add("United Kingdom");
+        countrySet.add("Canada");  
 
+        for (String country: countrySet)
+        {
+            long count = getAllCustomers().stream()
+                    .filter(a -> statesCountries.get(a.getDivisionName()).equals(country))
+                    .count();
+            CCountObjs.add(new CountObj(country, count));
+        }
+        
+        for (CountObj obj:CCountObjs)
+        {
+            System.out.println(obj.getType());
+            System.out.println(obj.getCount());
+        }
+        
     }    
 
 }

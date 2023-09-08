@@ -9,6 +9,7 @@ import Model.Customer;
 import Model.Database;
 import static dao.AppointmentQuery.appointmentsQuery;
 import static dao.ContactQuery.contactsQuery;
+import static dao.CustomerQuery.customersQuery;
 import dao.JDBC;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -74,6 +75,7 @@ public abstract class util {
         //queries
         contactsQuery();
         appointmentsQuery();
+        customersQuery();
         
         //country Ids
         countriesIds.put("United States", 1);

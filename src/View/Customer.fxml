@@ -8,8 +8,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="812.0" prefWidth="1053.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/19" fx:controller="Controller.CustomerController">
+<AnchorPane id="AnchorPane" prefHeight="812.0" prefWidth="1053.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.CustomerController">
    <children>
       <Label layoutX="38.0" layoutY="31.0" text="Customer Records" />
       <TableView fx:id="recordsTbl" layoutX="38.0" layoutY="93.0" prefHeight="385.0" prefWidth="922.0">
@@ -32,7 +31,6 @@
       <Button fx:id="editBtn" layoutX="822.0" layoutY="491.0" mnemonicParsing="false" onAction="#onActionEditBtn" text="Edit" />
       <Button fx:id="deleteBtn" layoutX="893.0" layoutY="491.0" mnemonicParsing="false" onAction="#onActionDeleteBtn" text="Delete" />
       <Button fx:id="addBtn" layoutX="742.0" layoutY="492.0" mnemonicParsing="false" onAction="#onActionAddBtn" text="Add" />
-      <Button fx:id="saveBtn" layoutX="819.0" layoutY="761.0" mnemonicParsing="false" onAction="#onActionSaveBtn" text="Save" />
       <Button fx:id="exitBtn" layoutX="901.0" layoutY="762.0" mnemonicParsing="false" onAction="#onActionExitBtn" text="Exit" />
       <TextField fx:id="idTxt" layoutX="148.0" layoutY="535.0" />
       <TextField fx:id="nameTxt" layoutX="656.0" layoutY="537.0" />
