@@ -8,7 +8,7 @@ import Helper.Switcher;
 import Model.Appointment;
 import static Model.Database.getAllAppointments;
 import Model.ReportObjects;
-import Model.ReportObjects.ApptTypeCount;
+import Model.ReportObjects.CountObj;
 import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,6 +16,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 
 import java.net.URL;
+import java.time.Month;
 import java.util.HashSet;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -109,23 +110,46 @@ public class ReportsController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-        ObservableList<ApptTypeCount> ApptTypeCounts = FXCollections.observableArrayList();
-        Set<String> apptTypes = new HashSet<>();
+        // count appt types
+        ObservableList<CountObj> ATCountObjs = FXCollections.observableArrayList();
+        Set<String> typeSet = new HashSet<>();
         
         for (Appointment appt: getAllAppointments())
         {
-            apptTypes.add(appt.getType());
-        }
-        
-        System.out.println(apptTypes);
-        
-        for (String type: apptTypes)
-        {
-            ApptTypeCounts.add(new ApptTypeCount(type));
+            typeSet.add(appt.getType());
         }
       
+        for (String type: typeSet)
+        {
+            long count = getAllAppointments().stream()
+                    .filter(a -> a.getType().equals(type))
+                    .count();
+            ATCountObjs.add(new CountObj(type, count));
+        }
+        
+        for (CountObj obj: ATCountObjs)
+        {
+            System.out.print(obj.getType());
+            System.out.print(obj.getCount());
+        }
+        
+        // count appts/month
+        ObservableList<CountObj> AMCountObjs = FXCollections.observableArrayList();
+        Set<Month> monthSet = new HashSet<>();
+        
+        for (Appointment appt: getAllAppointments())
+        {
+            monthSet.add(appt.getStart().getMonth());
+        }
+      
+        for (Month month: monthSet)
+        {
+            long count = getAllAppointments().stream()
+                    .filter(a -> a.getStart().getMonth() == month)
+                    .count();
+            AMCountObjs.add(new CountObj(month, count));
+        }
+
     }    
-    
 
 }

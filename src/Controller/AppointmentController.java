@@ -333,36 +333,40 @@ public class AppointmentController implements Initializable {
 
     @FXML
     void onActionAddBtn(ActionEvent event) throws SQLException {
-        
-        if (checkTime() != false) 
+        try 
         {
-            pullValues();
+            if (checkTime() != false) {
+                pullValues();
 
-            String sql = "INSERT INTO appointments (Title, "
-                    + "Description, Location, Type, Start, End, "
-                    + "Create_Date, Created_By, Last_Update, Last_Updated_By,"
-                    + " Customer_ID, User_ID, Contact_ID) "
-                    + "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";    
-            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-            ps.setString(1, title);
-            ps.setString(2, descr);
-            ps.setString(3, loc);
-            ps.setString(4, type);
-            ps.setString(5, start);
-            ps.setString(6, end);
-            ps.setTimestamp(7, createDate);
-            ps.setString(8, createdBy);
-            ps.setTimestamp(9, lastUpdate);
-            ps.setString(10, updatedBy);
-            ps.setInt(11, custId);
-            ps.setInt(12, userId);
-            ps.setInt(13, contactId);
+                String sql = "INSERT INTO appointments (Title, "
+                        + "Description, Location, Type, Start, End, "
+                        + "Create_Date, Created_By, Last_Update, Last_Updated_By,"
+                        + " Customer_ID, User_ID, Contact_ID) "
+                        + "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+                ps.setString(1, title);
+                ps.setString(2, descr);
+                ps.setString(3, loc);
+                ps.setString(4, type);
+                ps.setString(5, start);
+                ps.setString(6, end);
+                ps.setTimestamp(7, createDate);
+                ps.setString(8, createdBy);
+                ps.setTimestamp(9, lastUpdate);
+                ps.setString(10, updatedBy);
+                ps.setInt(11, custId);
+                ps.setInt(12, userId);
+                ps.setInt(13, contactId);
 
-            ps.execute();
+                ps.execute();
 
-
-            refresh();
+                refresh();
+            } 
         }
+        catch (java.sql.SQLIntegrityConstraintViolationException e)
+        {
+            Error("There is no customer with that id.");
+        } 
     }
 
     @FXML

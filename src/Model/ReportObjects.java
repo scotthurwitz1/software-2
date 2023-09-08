@@ -4,6 +4,8 @@
  */
 package Model;
 
+import java.time.Month;
+
 /**
  *
  * @author scott
@@ -12,18 +14,24 @@ public class ReportObjects {
     
     
     
-    public static class ApptTypeCount {
+    public static class CountObj {
         private String type;
-        private Integer count;
+        private Long count;
+        private Month month;
         
-        public ApptTypeCount(String type, Integer count){
+        public CountObj(String type, Long count){
             this.type = type;
             this.count = count;
         }
         
-        public ApptTypeCount(String type){
+        public CountObj(String type){
             this.type = type;
             this.count = null;
+        }
+        
+        public CountObj(Month month, Long count){
+            this.month = month;
+            this.count = count;
         }
 
         /**
@@ -36,7 +44,7 @@ public class ReportObjects {
         /**
          * @return the count
          */
-        public Integer getCount() {
+        public Long getCount() {
             return count;
         }
 
@@ -50,8 +58,16 @@ public class ReportObjects {
         /**
          * @param count the count to set
          */
-        public void setCount(Integer count) {
+        public void setCount(Long count) {
             this.count = count;
+        }
+        
+        public void setMonth(Month month) {
+            this.month = month;
+        }
+
+        public Month getMonth() {
+            return month;
         }
         
     }
