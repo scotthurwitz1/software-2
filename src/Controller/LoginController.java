@@ -20,7 +20,14 @@ import static Helper.util.Warning;
 import Model.Appointment;
 import static Model.Database.getAllAppointments;
 import Model.User;
+import java.io.FileWriter;
+import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.time.LocalDateTime;
+import static java.util.Collections.singletonList;
 
 public class LoginController implements Initializable {
     public static User current_user = new User(); 
@@ -52,10 +59,12 @@ public class LoginController implements Initializable {
     private Button loginBtn;
     
     @FXML
-    void onActionLoginBtn(ActionEvent event) throws SQLException, IOException {   
+    void onActionLoginBtn(ActionEvent event) throws SQLException, IOException {  
         boolean appts = false;
+        boolean success = false;
         if (LoginQuery.selectLoginCreds( usernameTxt.getText(), passwordTxt.getText()))
         {
+            success = true;
             switcher.screen("/View/MainMenu.fxml", event);
             for (Appointment appt: getAllAppointments())
             {
@@ -76,7 +85,19 @@ public class LoginController implements Initializable {
             if (appts == false) {
                 Warning("User " + current_user.getUserName() + " has no appointments right now.");
             }
-        }  
+        }
+        
+        String attempt = "User: " + usernameTxt.getText() + ", Date: " + LocalDateTime.now().toLocalDate() + 
+                ", Time: " + LocalDateTime.now().toLocalTime() + ", Success?: " + success + "\n";
+        String path = "/Users/scott/NetBeansProjects/DBClientAppV4/src/dbclientappv4/login_activity.txt";
+        
+        System.out.println("hi");
+        try (FileWriter writer = new FileWriter(path, true)) {
+            writer.write(attempt);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
     }
 
     @FXML

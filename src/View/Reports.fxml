@@ -41,12 +41,11 @@
                           <columns>
                             <TableColumn fx:id="idCol" prefWidth="75.0" text="Appt ID" />
                             <TableColumn fx:id="titleCol" prefWidth="75.0" text="Title" />
-                              <TableColumn fx:id="descCol" prefWidth="75.0" text="Description" />
-                              <TableColumn fx:id="locCol" prefWidth="75.0" text="Location" />
-                              <TableColumn fx:id="contCol" prefWidth="75.0" text="Contact" />
                               <TableColumn fx:id="typeCol" prefWidth="75.0" text="type" />
+                              <TableColumn fx:id="descCol" prefWidth="75.0" text="Description" />
                               <TableColumn fx:id="startCol" prefWidth="124.67794799804688" text="Start Date/Time" />
-                              <TableColumn fx:id="endCol" prefWidth="107.11370849609375" text="End Date/Time" />
+                              <TableColumn fx:id="endCol" prefWidth="112.59161376953125" text="End Date/Time" />
+                              <TableColumn fx:id="custIDCol" prefWidth="74.0059814453125" text="Cust ID" />
                           </columns>
                         </TableView>
                         <ComboBox fx:id="nameCombo" layoutX="25.0" layoutY="16.0" onAction="#nameComboAction" prefWidth="150.0" promptText="Contact Name" />

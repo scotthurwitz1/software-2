@@ -13,6 +13,8 @@ import static Model.Database.getAllAppointments;
 import static Model.Database.getAllCustomers;
 import Model.ReportObjects;
 import Model.ReportObjects.CountObj;
+import static dao.ContactQuery.contacts;
+import static dao.ContactQuery.idsContacts;
 import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -57,13 +59,13 @@ public class ReportsController implements Initializable {
     private TableColumn<?, ?> idCol;
 
     @FXML
-    private TableColumn<?, ?> locCol;
+    private TableColumn<?, ?> custIDCol;
 
     @FXML
     private TableColumn<?, ?> monthCol;
 
     @FXML
-    private ComboBox<?> nameCombo;
+    private ComboBox<String> nameCombo;
 
     @FXML
     private TableColumn<?, ?> numCol11;
@@ -82,6 +84,9 @@ public class ReportsController implements Initializable {
 
     @FXML
     private TableColumn<?, ?> typeCol1;
+    
+    @FXML
+    private TableColumn<?, ?> typeCol;
     
     @FXML
     private TableView countryTable;
@@ -105,7 +110,26 @@ public class ReportsController implements Initializable {
 
     @FXML
     void nameComboAction(ActionEvent event) {
-
+        ObservableList<Appointment> contactAppts = FXCollections.observableArrayList();
+        
+        for (Appointment appt: getAllAppointments())
+        {
+            if (idsContacts.get(appt.getContactId()).equals(nameCombo.getValue()))
+            {
+                contactAppts.add(appt);
+            }
+        }
+        
+        schedTable.setItems(contactAppts);
+        
+        idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        titleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
+        descCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+        typeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
+        startCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+        endCol.setCellValueFactory(new PropertyValueFactory<>("end"));
+        custIDCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        schedTable.refresh();
     }
     
     
@@ -115,6 +139,7 @@ public class ReportsController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        nameCombo.setItems(contacts);
         // count appt types
         ObservableList<CountObj> ATCountObjs = FXCollections.observableArrayList();
         Set<String> typeSet = new HashSet<>();
@@ -131,12 +156,6 @@ public class ReportsController implements Initializable {
                     .count();
             ATCountObjs.add(new CountObj(type, count));
         }
-        
-        for (CountObj obj:ATCountObjs)
-        {
-            System.out.println(obj.getType());
-            System.out.println(obj.getCount());
-        }  
         
         typeTable1.setItems(ATCountObjs);
         typeCol1.setCellValueFactory(new PropertyValueFactory<>("type"));
@@ -182,12 +201,7 @@ public class ReportsController implements Initializable {
         countryTable.setItems(CCountObjs);
         countryCol.setCellValueFactory(new PropertyValueFactory<>("type"));
         numCol3.setCellValueFactory(new PropertyValueFactory<>("count"));
-        
-        for (CountObj obj:CCountObjs)
-        {
-            System.out.println(obj.getType());
-            System.out.println(obj.getCount());
-        }   
+       
         
     }    
 }
