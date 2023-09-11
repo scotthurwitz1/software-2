@@ -18,15 +18,30 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 /**
- *
+ * queries sql db for contacts
  * @author scott
  */
 public class ContactQuery {
     
+    /**
+     * map contact names to ids
+     */
     public static Map<String, Integer> contactsIds = new HashMap<String, Integer>();
+
+    /**
+     * map contact ids to names
+     */
     public static Map<Integer, String> idsContacts = new HashMap<Integer, String>();
+
+    /**
+     * list of contacts
+     */
     public static ObservableList<String> contacts = FXCollections.observableArrayList();
     
+    /**
+     * get contacts from sql db
+     * @throws SQLException
+     */
     public static void contactsQuery() throws SQLException 
     {
 //        clearCustomers();

@@ -7,7 +7,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 
 /**
- *
+ * java database connection class
  * @author scott
  */
 public abstract class JDBC {
@@ -20,8 +20,15 @@ public abstract class JDBC {
     private static final String driver = "com.mysql.cj.jdbc.Driver"; // Driver reference
     private static final String userName = "sqlUser"; // Username
     private static String password = "Passw0rd!"; // Password
-    public static Connection connection;  // Connection Interface
 
+    /**
+     * connection interface
+     */
+    public static Connection connection;  
+
+    /**
+     * opens connection to sql server
+     */
     public static void openConnection()
     {
         try {
@@ -35,6 +42,9 @@ public abstract class JDBC {
         }
     }
 
+    /**
+     * closes connection
+     */
     public static void closeConnection() {
         try {
             connection.close();

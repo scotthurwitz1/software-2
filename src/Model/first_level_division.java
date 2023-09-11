@@ -7,7 +7,7 @@ package Model;
 import java.time.OffsetDateTime;
 
 /**
- *
+ * class for state details
  * @author scott
  */
 public class first_level_division {
@@ -19,6 +19,16 @@ public class first_level_division {
     private String lastUpdatedBy;
     private String countryId;
 
+    /**
+     * constructor
+     * @param divisionId
+     * @param Division
+     * @param createDate
+     * @param createdBy
+     * @param lastUpdate
+     * @param lastUpdatedBy
+     * @param countryId
+     */
     public first_level_division(int divisionId, String Division, OffsetDateTime createDate, String createdBy, OffsetDateTime lastUpdate, String lastUpdatedBy, String countryId) {
         this.divisionId = divisionId;
         this.Division = Division;
@@ -30,6 +40,7 @@ public class first_level_division {
     }
 
     /**
+     * get div id
      * @return the divisionId
      */
     public int getDivisionId() {
@@ -37,6 +48,7 @@ public class first_level_division {
     }
 
     /**
+     * get div name
      * @return the Division
      */
     public String getDivision() {
@@ -44,6 +56,7 @@ public class first_level_division {
     }
 
     /**
+     * get div create date
      * @return the createDate
      */
     public OffsetDateTime getCreateDate() {
@@ -51,6 +64,7 @@ public class first_level_division {
     }
 
     /**
+     * get div creator
      * @return the createdBy
      */
     public String getCreatedBy() {
@@ -58,6 +72,7 @@ public class first_level_division {
     }
 
     /**
+     * get div last update
      * @return the lastUpdate
      */
     public OffsetDateTime getLastUpdate() {
@@ -65,6 +80,7 @@ public class first_level_division {
     }
 
     /**
+     * get div last updater
      * @return the lastUpdatedBy
      */
     public String getLastUpdatedBy() {
@@ -72,6 +88,7 @@ public class first_level_division {
     }
 
     /**
+     * get div country
      * @return the countryId
      */
     public String getCountryId() {
@@ -79,6 +96,7 @@ public class first_level_division {
     }
 
     /**
+     * set div id
      * @param divisionId the divisionId to set
      */
     public void setDivisionId(int divisionId) {
@@ -86,6 +104,7 @@ public class first_level_division {
     }
 
     /**
+     * set div name
      * @param Division the Division to set
      */
     public void setDivision(String Division) {
@@ -93,6 +112,7 @@ public class first_level_division {
     }
 
     /**
+     * set div created
      * @param createDate the createDate to set
      */
     public void setCreateDate(OffsetDateTime createDate) {
@@ -100,6 +120,7 @@ public class first_level_division {
     }
 
     /**
+     * set div creator
      * @param createdBy the createdBy to set
      */
     public void setCreatedBy(String createdBy) {
@@ -107,6 +128,7 @@ public class first_level_division {
     }
 
     /**
+     * set div updated
      * @param lastUpdate the lastUpdate to set
      */
     public void setLastUpdate(OffsetDateTime lastUpdate) {
@@ -114,6 +136,7 @@ public class first_level_division {
     }
 
     /**
+     * set div updater
      * @param lastUpdatedBy the lastUpdatedBy to set
      */
     public void setLastUpdatedBy(String lastUpdatedBy) {
@@ -121,6 +144,7 @@ public class first_level_division {
     }
 
     /**
+     * set div country
      * @param countryId the countryId to set
      */
     public void setCountryId(String countryId) {

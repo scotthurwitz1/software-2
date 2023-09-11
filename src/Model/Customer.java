@@ -7,7 +7,7 @@ package Model;
 import java.time.OffsetDateTime;
 
 /**
- *
+ * customer objects class
  * @author scott
  */
 public class Customer {
@@ -23,6 +23,16 @@ public class Customer {
     private int divisionId;
     private String divisionName;
 
+    /**
+     * constructor
+     * @param customerId
+     * @param customerName
+     * @param address
+     * @param postalCode
+     * @param phone
+     * @param divisionId
+     * @param divisionName
+     */
     public Customer(int customerId, String customerName, String address, String postalCode, String phone, int divisionId, String divisionName) {
         this.id = customerId;
         this.name = customerName;
@@ -35,6 +45,7 @@ public class Customer {
     }
 
     /**
+     * get customer id
      * @return the id
      */
     public int getId() {
@@ -42,6 +53,7 @@ public class Customer {
     }
 
     /**
+     * get customer name
      * @return the name
      */
     public String getName() {
@@ -49,6 +61,7 @@ public class Customer {
     }
 
     /**
+     * get customer address
      * @return the address
      */
     public String getAddress() {
@@ -56,6 +69,7 @@ public class Customer {
     }
 
     /**
+     * get customer postal code
      * @return the postalCode
      */
     public String getPostalCode() {
@@ -63,6 +77,7 @@ public class Customer {
     }
 
     /**
+     * get customer phone
      * @return the phone
      */
     public String getPhone() {
@@ -70,6 +85,7 @@ public class Customer {
     }
 
     /**
+     * get customer state id
      * @return the divisionName
      */
     public int getDivisionId() {
@@ -77,6 +93,7 @@ public class Customer {
     }
     
     /**
+     * get customer state
      * @return the divisionName
      */
     public String getDivisionName() {
@@ -84,6 +101,7 @@ public class Customer {
     }
 
     /**
+     * set customer id
      * @param id the id to set
      */
     public void setId(int id) {
@@ -91,6 +109,7 @@ public class Customer {
     }
 
     /**
+     * customer set name
      * @param name the name to set
      */
     public void setName(String name) {
@@ -98,6 +117,7 @@ public class Customer {
     }
 
     /**
+     * set customer address
      * @param address the address to set
      */
     public void setAddress(String address) {
@@ -105,6 +125,7 @@ public class Customer {
     }
 
     /**
+     * set customer postal code
      * @param postalCode the postalCode to set
      */
     public void setPostalCode(String postalCode) {
@@ -112,6 +133,7 @@ public class Customer {
     }
 
     /**
+     * set customer phone
      * @param phone the phone to set
      */
     public void setPhone(String phone) {
@@ -119,6 +141,7 @@ public class Customer {
     }
 
     /**
+     * set customer state
      * @param divisionName the divisionName to set
      */
     public void setDivisionName(String divisionName) {

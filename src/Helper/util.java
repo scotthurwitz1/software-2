@@ -35,7 +35,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- *
+ * collection of useful methods
  * @author scott
  */
 public abstract class util {
@@ -47,14 +47,29 @@ public abstract class util {
     private static ObservableList<String> canadaStates = FXCollections.observableArrayList();
     private static ObservableList<String> ukStates = FXCollections.observableArrayList();
     
-    
+    /**
+     *
+     */
     public static Map<String, Integer> statesIds = new HashMap<String, Integer>();
+
+    /**
+     *
+     */
     public static Map<Integer, String> idsStates = new HashMap<Integer, String>();
+
+    /**
+     *
+     */
     public static Map<String, Integer> countriesIds = new HashMap<String, Integer>();
+
+    /**
+     *
+     */
     public static Map<String, String> statesCountries = new HashMap<String, String>();
     
     
      /**
+     * gets countries list
      * @return the allCountries
      */
   
@@ -63,12 +78,17 @@ public abstract class util {
     }
     
     /**
+     * gets states list
      * @return the allStates
      */
     public static ObservableList<String> getAllStates() {
         return allStates;
     }
     
+    /**
+     * tasks required on startup of the app
+     * @throws SQLException
+     */
     public static void initUtil() throws SQLException {
         Database database = new Database();
         
@@ -118,6 +138,11 @@ public abstract class util {
         }
     }
     
+    /**
+     * time conversion to utc method
+     * @param stamp
+     * @return
+     */
     public static String toUTC(String stamp)
     {
         Timestamp ex = Timestamp.valueOf(String.valueOf(stamp));
@@ -129,6 +154,10 @@ public abstract class util {
         return utc1;       
     }
 
+    /**
+     * error handling method
+     * @param text
+     */
     public static void Error(String text)
     {
         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -137,6 +166,10 @@ public abstract class util {
         alert.showAndWait();
     }
     
+    /**
+     * warning handling method
+     * @param text
+     */
     public static void Warning(String text)
     {
         Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -145,6 +178,10 @@ public abstract class util {
         alert.showAndWait();
     }
     
+    /**
+     * alert method in french
+     * @param text
+     */
     public static void alertFR(String text)
     {
         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -154,12 +191,20 @@ public abstract class util {
     }
     //test
     
+    /**
+     * timezone filter method
+     */
     public static void timeZone()
     {
         System.out.println(ZoneId.systemDefault());
         ZoneId.getAvailableZoneIds().stream().filter(z->z.contains("America")).sorted().forEach(System.out::println);
     }
     
+    /**
+     * method to convert timestamp to local time
+     * @param stamp
+     * @return
+     */
     public static LocalDateTime toLocal(Timestamp stamp)
     {
         LocalDateTime utcLDT = stamp.toLocalDateTime();
@@ -172,34 +217,9 @@ public abstract class util {
         LocalDateTime local = myZDT.toLocalDateTime();
         return local;       
     }
-    
-//    public static void ZDT()
-//    {
-//        LocalDate myLD = LocalDate.of(2020, 10, 11); // or use "date picker"?
-//        LocalTime myLT = LocalTime.of(22, 0);
-//        
-//        LocalDateTime myLDT = LocalDateTime.of(myLD, myLT);
-//        ZoneId myZoneId = ZoneId.systemDefault();
-//        ZonedDateTime myZDT = ZonedDateTime.of(myLDT, myZoneId);
-//        
-////        System.out.println(myZDT.toLocalDate());
-////        System.out.println(myZDT.toLocalTime());
-////        System.out.println(myZDT.toLocalDate().toString() + " " + myZDT.toLocalTime().toString());
-//
-//        System.out.println("User time: " + myZDT);
-//        
-//        // time to utc 
-//        ZoneId utcZoneId = ZoneId.of("UTC");
-//        ZonedDateTime utcZDT = ZonedDateTime.ofInstant(myZDT.toInstant(), utcZoneId);
-//        System.out.println("User time to UTC: " + utcZDT);
-//        
-//        // utc to time
-//        myZDT = ZonedDateTime.ofInstant(utcZDT.toInstant(), myZoneId);
-//        System.out.println("UTC to User Time: " + myZDT);
-//
-//    }
 
     /**
+     * gets list of states
      * @return the usStates
      */
     public static ObservableList<String> getUsStates() {
@@ -207,6 +227,7 @@ public abstract class util {
     }
 
     /**
+     * gets list of provinces
      * @return the canadaStates
      */
     public static ObservableList<String> getCanadaStates() {
@@ -214,6 +235,7 @@ public abstract class util {
     }
 
     /**
+     * gets list of uk first level divisions
      * @return the ukStates
      */
     public static ObservableList<String> getUkStates() {
@@ -221,9 +243,4 @@ public abstract class util {
     }
 
 
-   
-    
-    
-    
-    
 }

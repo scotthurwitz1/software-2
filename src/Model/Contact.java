@@ -5,7 +5,7 @@
 package Model;
 
 /**
- *
+ * class for contact objects
  * @author scott
  */
 public class Contact {
@@ -13,6 +13,12 @@ public class Contact {
     private String contactName;
     private String email;
 
+    /**
+     * constructor
+     * @param contactId
+     * @param contactName
+     * @param email
+     */
     public Contact(int contactId, String contactName, String email) {
         this.contactId = contactId;
         this.contactName = contactName;
@@ -20,6 +26,7 @@ public class Contact {
     }
 
     /**
+     * get contact id
      * @return the contactId
      */
     public int getContactId() {
@@ -27,6 +34,7 @@ public class Contact {
     }
 
     /**
+     * get contact name
      * @return the contactName
      */
     public String getContactName() {
@@ -34,6 +42,7 @@ public class Contact {
     }
 
     /**
+     * get contact email
      * @return the email
      */
     public String getEmail() {
@@ -41,6 +50,7 @@ public class Contact {
     }
 
     /**
+     * set contact id
      * @param contactId the contactId to set
      */
     public void setContactId(int contactId) {
@@ -48,6 +58,7 @@ public class Contact {
     }
 
     /**
+     * set contact name
      * @param contactName the contactName to set
      */
     public void setContactName(String contactName) {
@@ -55,6 +66,7 @@ public class Contact {
     }
 
     /**
+     * set contact email
      * @param email the email to set
      */
     public void setEmail(String email) {

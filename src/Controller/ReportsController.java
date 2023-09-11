@@ -103,11 +103,20 @@ public class ReportsController implements Initializable {
     @FXML
     private Button backBtn;
     
+    /**
+     * switches back to main menu
+     * @param event
+     * @throws IOException 
+     */
     @FXML
     void backBtnAction(ActionEvent event) throws IOException {
         switcher.screen("/View/MainMenu.fxml", event);
     }
-
+    
+    /**
+     * sets schedule contents by contact name
+     * @param event 
+     */
     @FXML
     void nameComboAction(ActionEvent event) {
         ObservableList<Appointment> contactAppts = FXCollections.observableArrayList();
@@ -135,7 +144,10 @@ public class ReportsController implements Initializable {
     
 
     /**
-     * Initializes the controller class.
+     * Initializes the reports controller class.
+     * populate tables
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {

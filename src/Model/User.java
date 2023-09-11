@@ -7,7 +7,7 @@ package Model;
 import java.time.OffsetDateTime;
 
 /**
- *
+ * app user object class
  * @author scott
  */
 public class User {
@@ -19,6 +19,16 @@ public class User {
     private OffsetDateTime lastUpdate;
     private String lastUpdatedBy;
 
+    /**
+     * constructor
+     * @param userId
+     * @param userName
+     * @param password
+     * @param createDate
+     * @param createdBy
+     * @param lastUpdate
+     * @param lastUpdatedBy
+     */
     public User(int userId, String userName, String password, OffsetDateTime createDate, String createdBy, OffsetDateTime lastUpdate, String lastUpdatedBy) {
         this.userId = userId;
         this.userName = userName;
@@ -29,6 +39,9 @@ public class User {
         this.lastUpdatedBy = lastUpdatedBy;
     }
 
+    /**
+     * constructor
+     */
     public User() {
         this.userId = 0;
         this.userName = "";
@@ -40,6 +53,7 @@ public class User {
     }
 
     /**
+     * get user id
      * @return the userId
      */
     public int getUserId() {
@@ -47,6 +61,7 @@ public class User {
     }
 
     /**
+     * get user name
      * @return the userName
      */
     public String getUserName() {
@@ -54,6 +69,7 @@ public class User {
     }
 
     /**
+     * get user pw
      * @return the password
      */
     public String getPassword() {
@@ -61,6 +77,7 @@ public class User {
     }
 
     /**
+     * get user create date
      * @return the createDate
      */
     public OffsetDateTime getCreateDate() {
@@ -68,6 +85,7 @@ public class User {
     }
 
     /**
+     * get user creator
      * @return the createdBy
      */
     public String getCreatedBy() {
@@ -75,6 +93,7 @@ public class User {
     }
 
     /**
+     * get last update date
      * @return the lastUpdate
      */
     public OffsetDateTime getLastUpdate() {
@@ -82,6 +101,7 @@ public class User {
     }
 
     /**
+     * get last updater
      * @return the lastUpdatedBy
      */
     public String getLastUpdatedBy() {
@@ -89,6 +109,7 @@ public class User {
     }
 
     /**
+     * set user id
      * @param userId the userId to set
      */
     public void setUserId(int userId) {
@@ -96,6 +117,7 @@ public class User {
     }
 
     /**
+     * set username
      * @param userName the userName to set
      */
     public void setUserName(String userName) {
@@ -103,6 +125,7 @@ public class User {
     }
 
     /**
+     * set user pw
      * @param password the password to set
      */
     public void setPassword(String password) {
@@ -110,6 +133,7 @@ public class User {
     }
 
     /**
+     * set user createdate
      * @param createDate the createDate to set
      */
     public void setCreateDate(OffsetDateTime createDate) {
@@ -117,6 +141,7 @@ public class User {
     }
 
     /**
+     * set user creator
      * @param createdBy the createdBy to set
      */
     public void setCreatedBy(String createdBy) {
@@ -124,6 +149,7 @@ public class User {
     }
 
     /**
+     * set user last update
      * @param lastUpdate the lastUpdate to set
      */
     public void setLastUpdate(OffsetDateTime lastUpdate) {
@@ -131,6 +157,7 @@ public class User {
     }
 
     /**
+     * set user last updater
      * @param lastUpdatedBy the lastUpdatedBy to set
      */
     public void setLastUpdatedBy(String lastUpdatedBy) {

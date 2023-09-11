@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 
 /**
- *
+ * setup for appointment objects
  * @author scott
  */
 public class Appointment {
@@ -23,6 +23,19 @@ public class Appointment {
     private int userId;
     private int contactId;
 
+    /**
+     * constructor
+     * @param id
+     * @param title
+     * @param description
+     * @param location
+     * @param type
+     * @param start
+     * @param end
+     * @param userId
+     * @param customerId
+     * @param contactId
+     */
     public Appointment(int id, String title, String description, String location, 
             String type, LocalDateTime start, LocalDateTime end, int userId, int customerId,  
             int contactId) {
@@ -39,6 +52,7 @@ public class Appointment {
     }
 
     /**
+     * gets appt id
      * @return the id
      */
     public int getId() {
@@ -46,6 +60,7 @@ public class Appointment {
     }
 
     /**
+     * gets appt title
      * @return the title
      */
     public String getTitle() {
@@ -53,6 +68,7 @@ public class Appointment {
     }
 
     /**
+     * gets appt description
      * @return the description
      */
     public String getDescription() {
@@ -60,6 +76,7 @@ public class Appointment {
     }
 
     /**
+     * gets appt location
      * @return the location
      */
     public String getLocation() {
@@ -67,6 +84,7 @@ public class Appointment {
     }
 
     /**
+     * gets appt type
      * @return the type
      */
     public String getType() {
@@ -74,6 +92,7 @@ public class Appointment {
     }
 
     /**
+     * gets appt start time
      * @return the start
      */
     public LocalDateTime getStart() {
@@ -81,6 +100,7 @@ public class Appointment {
     }
 
     /**
+     * get appt end time
      * @return the end
      */
     public LocalDateTime getEnd() {
@@ -92,6 +112,7 @@ public class Appointment {
      */
 
     /**
+     * get appt cust id
      * @return the customerId
      */
     public int getCustomerId() {
@@ -99,6 +120,7 @@ public class Appointment {
     }
 
     /**
+     * get appt user id
      * @return the userId
      */
     public int getUserId() {
@@ -106,6 +128,7 @@ public class Appointment {
     }
 
     /**
+     * get appt contact id
      * @return the contactId
      */
     public int getContactId() {
@@ -113,6 +136,7 @@ public class Appointment {
     }
 
     /**
+     * set appt title
      * @param title the title to set
      */
     public void setTitle(String title) {
@@ -120,6 +144,7 @@ public class Appointment {
     }
 
     /**
+     * set appt description
      * @param description the description to set
      */
     public void setDescription(String description) {
@@ -127,6 +152,7 @@ public class Appointment {
     }
 
     /**
+     * set appt location
      * @param location the location to set
      */
     public void setLocation(String location) {
@@ -134,6 +160,7 @@ public class Appointment {
     }
 
     /**
+     * set appt type
      * @param type the type to set
      */
     public void setType(String type) {
@@ -141,6 +168,7 @@ public class Appointment {
     }
 
     /**
+     * set appt start
      * @param start the start to set
      */
     public void setStart(LocalDateTime start) {
@@ -148,6 +176,7 @@ public class Appointment {
     }
 
     /**
+     * set appt end time
      * @param end the end to set
      */
     public void setEnd(LocalDateTime end) {
@@ -155,6 +184,7 @@ public class Appointment {
     }
 
     /**
+     * set appt cust id
      * @param customerId the customerId to set
      */
     public void setCustomerId(int customerId) {
@@ -162,6 +192,7 @@ public class Appointment {
     }
 
     /**
+     * set appt user id
      * @param userId the userId to set
      */
     public void setUserId(int userId) {
@@ -169,6 +200,7 @@ public class Appointment {
     }
 
     /**
+     * set appt contact id
      * @param contactId the contactId to set
      */
     public void setContactId(int contactId) {

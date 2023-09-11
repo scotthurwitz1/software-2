@@ -29,7 +29,15 @@ import java.nio.file.StandardOpenOption;
 import java.time.LocalDateTime;
 import static java.util.Collections.singletonList;
 
+/**
+ *Controller for Login class
+ * @author scott
+ */
 public class LoginController implements Initializable {
+
+    /**
+     *User object to hold info statically.
+     */
     public static User current_user = new User(); 
     
     Switcher switcher = new Switcher();
@@ -59,6 +67,12 @@ public class LoginController implements Initializable {
     private Button loginBtn;
     
     @FXML
+    /**
+     * Conducts actions needed for login.
+     * Checks credentials
+     * Checks for upcoming appointments
+     * Logs attempts in login_attempts.txt.
+     */
     void onActionLoginBtn(ActionEvent event) throws SQLException, IOException {  
         boolean appts = false;
         boolean success = false;
@@ -89,7 +103,7 @@ public class LoginController implements Initializable {
         
         String attempt = "User: " + usernameTxt.getText() + ", Date: " + LocalDateTime.now().toLocalDate() + 
                 ", Time: " + LocalDateTime.now().toLocalTime() + ", Success?: " + success + "\n";
-        String path = "/Users/scott/NetBeansProjects/DBClientAppV4/src/dbclientappv4/login_activity.txt";
+        String path = "/Users/scott/NetBeansProjects/DBClientAppV4/login_activity.txt";
         
         System.out.println("hi");
         try (FileWriter writer = new FileWriter(path, true)) {
@@ -110,6 +124,13 @@ public class LoginController implements Initializable {
   
     }
     
+    /**
+     * Initializes Login Controller
+     * Deals with language settings
+     * Sets location
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         System.out.println(Locale.getDefault());

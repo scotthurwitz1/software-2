@@ -124,7 +124,10 @@ public class CustomerController implements Initializable {
     @FXML
     private ComboBox<String> stateCombo;
     
-    // lift customer details from text fields
+    /**
+     * // lift customer details from text fields
+     */
+    
     void pullValues()
     {
         name = nameTxt.getText();
@@ -156,7 +159,11 @@ public class CustomerController implements Initializable {
         countryCombo.setValue(country);
     }
     
-    // clear fields and refresh table
+    /**
+     * // clear fields and refresh table
+     * @throws SQLException 
+     */
+    
     void refresh() throws SQLException
     {
         nameTxt.clear();
@@ -168,7 +175,12 @@ public class CustomerController implements Initializable {
         customersQuery();
         recordsTbl.setItems(Database.getAllCustomers()); 
     }
-
+    
+    /**
+     * add customer to table
+     * @param event
+     * @throws SQLException 
+     */
     @FXML
     void onActionAddBtn(ActionEvent event) throws SQLException {
 
@@ -192,7 +204,11 @@ public class CustomerController implements Initializable {
         refresh();
 
     }
-
+    
+    /**
+     * select country for customer
+     * @param event 
+     */
     @FXML
     void onActionCountryCombo(ActionEvent event) {
         
@@ -205,7 +221,12 @@ public class CustomerController implements Initializable {
                 stateCombo.setItems(getCanadaStates());
         
     }
-
+    
+    /**
+     * delete customer
+     * @param event
+     * @throws SQLException 
+     */
     @FXML
     void onActionDeleteBtn(ActionEvent event) throws SQLException {
         try
@@ -241,15 +262,18 @@ public class CustomerController implements Initializable {
         }
 
     }
-
+    
+    /**
+     * prepare form to make edits to customer
+     * @param event 
+     */
     @FXML
     void onActionEditBtn(ActionEvent event) {
         
         Customer cust = recordsTbl.getSelectionModel().getSelectedItem();
         setValues(cust);
         id = cust.getId();
-        
-
+   
     }
 
     @FXML
@@ -258,7 +282,12 @@ public class CustomerController implements Initializable {
         switcher.screen("/View/MainMenu.fxml", event);
 
     }
-
+    
+    /**
+     * save edits to customer
+     * @param event
+     * @throws SQLException 
+     */
     @FXML
     void onActionSaveBtn(ActionEvent event) throws SQLException {
         
@@ -295,6 +324,8 @@ public class CustomerController implements Initializable {
 
     /**
      * Initializes the controller class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {

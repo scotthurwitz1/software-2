@@ -13,7 +13,7 @@ import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 /**
- *
+ * utility for switching between application screens
  * @author scott
  */
 public class Switcher {

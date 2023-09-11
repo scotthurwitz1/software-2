@@ -61,7 +61,7 @@ import javafx.scene.control.ButtonType;
 
 /**
  * FXML Controller class
- *
+ * Controls appointment view
  * @author scott
  */
 public class AppointmentController implements Initializable {
@@ -202,6 +202,9 @@ public class AppointmentController implements Initializable {
     @FXML
     private RadioButton weekRadio;
     
+    /**
+     * Sets monthly appt calendar
+     */
     void setMonthly() {
         monthly.clear();
         Month month = LocalDate.now().getMonth();
@@ -216,6 +219,9 @@ public class AppointmentController implements Initializable {
         apptsTbl.setItems(monthly);
     }
     
+    /**
+     *  Sets weekly appt calendar
+     */
     void setWeekly() {
         weekly.clear();
         WeekFields weekFields = WeekFields.of(Locale.getDefault());
@@ -232,6 +238,10 @@ public class AppointmentController implements Initializable {
                 }
         }); 
     }
+    
+    /**
+     * Pulls form values
+     */
     
     void pullValues()
     {
@@ -260,7 +270,11 @@ public class AppointmentController implements Initializable {
 
     }
     
-    // set text field values from selected customer
+    /**
+     * sets text field values from selected appt
+     * @param appt 
+     */
+  
     void setValues(Appointment appt)
     {
         String id = Integer.toString(appt.getId());
@@ -294,7 +308,11 @@ public class AppointmentController implements Initializable {
         userIdTxt.setText(userId);
     }
     
-     // clear fields and refresh table
+    /**
+     * clear fields and refresh table
+     * @throws SQLException 
+     */
+     
     void refresh() throws SQLException
     {   
         idTxt.setText("Auto Generated");
@@ -330,7 +348,12 @@ public class AppointmentController implements Initializable {
             apptsTbl.setItems(Database.getAllAppointments()); 
         }
     }
-
+    
+    /**
+     * add appointment to table
+     * @param event
+     * @throws SQLException 
+     */
     @FXML
     void onActionAddBtn(ActionEvent event) throws SQLException {
         try 
@@ -387,7 +410,12 @@ public class AppointmentController implements Initializable {
     void onActionContactCombo(ActionEvent event) {
 
     }
-
+    
+    /**
+     * delete appt from table
+     * @param event
+     * @throws SQLException 
+     */
     @FXML
     void onActionDeleteBtn(ActionEvent event) throws SQLException {
         
@@ -425,7 +453,11 @@ public class AppointmentController implements Initializable {
     void onActionEndTime(ActionEvent event) {
 
     }
-
+    
+    /**
+     * modify appt selection
+     * @param event 
+     */
     @FXML
     void onActionModifyBtn(ActionEvent event) {
         try {
@@ -454,7 +486,12 @@ public class AppointmentController implements Initializable {
         refresh();
         
     }
-
+    
+    /**
+     * save modifications
+     * @param event
+     * @throws SQLException 
+     */
     @FXML
     void onActionSaveBtn(ActionEvent event) throws SQLException {
         
@@ -517,6 +554,8 @@ public class AppointmentController implements Initializable {
     
     /**
      * Initializes the controller class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -554,7 +593,10 @@ public class AppointmentController implements Initializable {
         
 
     }    
-    
+    /**
+     * use to check appointment times against constraints
+     * @return boolean
+     */
      boolean checkTime()
     {   
         //format start/end dates and times

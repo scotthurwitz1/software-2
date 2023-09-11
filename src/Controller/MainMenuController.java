@@ -15,7 +15,7 @@ import javafx.scene.control.Button;
 
 /**
  * FXML Controller class
- *
+ * controls main menu
  * @author scott
  */
 public class MainMenuController implements Initializable {
@@ -30,26 +30,43 @@ public class MainMenuController implements Initializable {
 
     @FXML
     private Button reportBtn;
-
+    
+    /**
+     * switch to appointment view
+     * @param event
+     * @throws IOException 
+     */
     @FXML
     void onActionAppBtn(ActionEvent event) throws IOException {
         switcher.screen("/View/Appointment.fxml", event);
     }
-
+    
+    /**
+     * switch to customer view
+     * @param event
+     * @throws IOException 
+     */
     @FXML
     void onActionCustBtn(ActionEvent event) throws IOException {
         
         switcher.screen("/View/Customer.fxml", event);
 
     }
-
+    
+    /**
+     * switch to report view
+     * @param event
+     * @throws IOException 
+     */
     @FXML
     void onActionReportBtn(ActionEvent event) throws IOException {
        switcher.screen("/View/Reports.fxml", event);
     }
 
     /**
-     * Initializes the controller class.
+     * Initializes the main menu controller class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {

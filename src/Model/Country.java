@@ -7,7 +7,7 @@ package Model;
 import java.time.OffsetDateTime;
 
 /**
- *
+ * class to set up country objects
  * @author scott
  */
 public class Country {
@@ -18,6 +18,15 @@ public class Country {
     private OffsetDateTime lastUpdate;
     private String lastUpdatedBy;
 
+    /**
+     * constructor
+     * @param countryId
+     * @param country
+     * @param createDate
+     * @param createdBy
+     * @param lastUpdate
+     * @param lastUpdatedBy
+     */
     public Country(int countryId, String country, OffsetDateTime createDate, String createdBy, OffsetDateTime lastUpdate, String lastUpdatedBy) {
         this.countryId = countryId;
         this.country = country;
@@ -28,6 +37,7 @@ public class Country {
     }
 
     /**
+     * get country id
      * @return the countryId
      */
     public int getCountryId() {
@@ -35,6 +45,7 @@ public class Country {
     }
 
     /**
+     * get country name
      * @return the country
      */
     public String getCountry() {
@@ -42,6 +53,7 @@ public class Country {
     }
 
     /**
+     * get country create date
      * @return the createDate
      */
     public OffsetDateTime getCreateDate() {
@@ -49,6 +61,7 @@ public class Country {
     }
 
     /**
+     * get country creator
      * @return the createdBy
      */
     public String getCreatedBy() {
@@ -56,6 +69,7 @@ public class Country {
     }
 
     /**
+     * get country last update
      * @return the lastUpdate
      */
     public OffsetDateTime getLastUpdate() {
@@ -63,6 +77,7 @@ public class Country {
     }
 
     /**
+     * get country's last updater
      * @return the lastUpdatedBy
      */
     public String getLastUpdatedBy() {
@@ -70,6 +85,7 @@ public class Country {
     }
 
     /**
+     * set country id
      * @param countryId the countryId to set
      */
     public void setCountryId(int countryId) {
@@ -77,6 +93,7 @@ public class Country {
     }
 
     /**
+     * set country name
      * @param country the country to set
      */
     public void setCountry(String country) {
@@ -84,6 +101,7 @@ public class Country {
     }
 
     /**
+     * set country's start date
      * @param createDate the createDate to set
      */
     public void setCreateDate(OffsetDateTime createDate) {
@@ -91,6 +109,7 @@ public class Country {
     }
 
     /**
+     * set country adder 
      * @param createdBy the createdBy to set
      */
     public void setCreatedBy(String createdBy) {
@@ -98,6 +117,7 @@ public class Country {
     }
 
     /**
+     * set country update time
      * @param lastUpdate the lastUpdate to set
      */
     public void setLastUpdate(OffsetDateTime lastUpdate) {
@@ -105,6 +125,7 @@ public class Country {
     }
 
     /**
+     * set country updater
      * @param lastUpdatedBy the lastUpdatedBy to set
      */
     public void setLastUpdatedBy(String lastUpdatedBy) {

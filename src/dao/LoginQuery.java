@@ -15,13 +15,19 @@ import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 /**
- *
+ * query for logging in to app
  * @author scott
  */
 public abstract class LoginQuery {
     
-
-public static boolean selectLoginCreds(String userId, String password) throws SQLException {
+    /**
+     * query takes username and password and verifies it
+     * @param userId
+     * @param password
+     * @return
+     * @throws SQLException
+     */
+    public static boolean selectLoginCreds(String userId, String password) throws SQLException {
         
     String sql = "SELECT * FROM USERS WHERE USER_NAME = ? AND PASSWORD = ?";
     PreparedStatement ps = JDBC.connection.prepareStatement(sql);

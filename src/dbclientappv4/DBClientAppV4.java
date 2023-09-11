@@ -20,13 +20,16 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
- *
+ * main method for business application
  * @author scott
  */
 public class DBClientAppV4 extends Application {
 
     /**
+     * main method
      * @param args the command line arguments
+     * @throws java.sql.SQLException
+     * @throws java.lang.Exception
      */
     public static void main(String[] args) throws SQLException, Exception {
         
@@ -41,6 +44,11 @@ public class DBClientAppV4 extends Application {
         
     }
 
+    /**
+     * java fx start method
+     * @param stage
+     * @throws Exception
+     */
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/View/Login.fxml"));

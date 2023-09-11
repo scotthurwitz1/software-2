@@ -17,11 +17,15 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 
 /**
- *
+ * queries sql db for appts
  * @author scott
  */
 public class AppointmentQuery {
     
+    /**
+     * gets all appts from db
+     * @throws SQLException
+     */
     public static void appointmentsQuery() throws SQLException 
     {
         clearAppointments();
