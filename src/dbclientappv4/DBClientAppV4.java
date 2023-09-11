@@ -37,7 +37,6 @@ public class DBClientAppV4 extends Application {
         
         initUtil();
 
-        
         launch(args);
 
         JDBC.closeConnection();

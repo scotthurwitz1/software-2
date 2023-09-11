@@ -247,7 +247,6 @@ public class CustomerController implements Initializable {
                         return;
                     } 
                 }
-                System.out.println("hi");
                 String sql = "DELETE FROM customers" 
                 + " WHERE Customer_ID = ?";    
                 PreparedStatement ps = JDBC.connection.prepareStatement(sql);
