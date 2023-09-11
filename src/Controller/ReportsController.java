@@ -145,7 +145,11 @@ public class ReportsController implements Initializable {
 
     /**
      * Initializes the reports controller class.
-     * populate tables
+     * populate tables.
+     * Lambda expression 1:
+     * The lambda expression a -> a.getType().equals(type) checks if the type of each appointment a matches the current type under consideration. The resulting filtered stream is then counted using the count() method to determine the number of appointments of that specific type.
+     * Lambda Expression 2:
+     * The lambda expression a -> statesCountries.get(a.getDivisionName()).equals(country) checks if the division name of each customer a corresponds to the given country. After filtering, the count() method calculates the total number of customers from that particular country. 
      * @param url
      * @param rb
      */

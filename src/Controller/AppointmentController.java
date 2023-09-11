@@ -4,6 +4,8 @@
  */
 package Controller;
 
+import Controller.CustomerController;
+import Helper.Switcher;
 import Helper.Switcher;
 import Helper.util;
 import static Helper.util.Error;

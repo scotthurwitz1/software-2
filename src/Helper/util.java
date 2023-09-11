@@ -48,22 +48,22 @@ public abstract class util {
     private static ObservableList<String> ukStates = FXCollections.observableArrayList();
     
     /**
-     *
+     * maps ids to states
      */
     public static Map<String, Integer> statesIds = new HashMap<String, Integer>();
 
     /**
-     *
+     * maps states to ids
      */
     public static Map<Integer, String> idsStates = new HashMap<Integer, String>();
 
     /**
-     *
+     * maps ids to countries
      */
     public static Map<String, Integer> countriesIds = new HashMap<String, Integer>();
 
     /**
-     *
+     * maps countries to states
      */
     public static Map<String, String> statesCountries = new HashMap<String, String>();
     
