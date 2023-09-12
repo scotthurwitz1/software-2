@@ -39,5 +39,6 @@
       <TextField fx:id="phoneTxt" layoutX="724.0" layoutY="642.0" />
       <ComboBox fx:id="countryCombo" layoutX="187.0" layoutY="696.0" onAction="#onActionCountryCombo" prefWidth="150.0" />
       <ComboBox fx:id="stateCombo" layoutX="692.0" layoutY="702.0" onAction="#onActionStateCombo" prefWidth="150.0" />
+      <Button fx:id="saveBtn" layoutX="105.0" layoutY="762.0" mnemonicParsing="false" onAction="#onActionSaveBtn" text="Save" />
    </children>
 </AnchorPane>

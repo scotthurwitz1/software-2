@@ -103,9 +103,7 @@ public class LoginController implements Initializable {
         
         String attempt = "User: " + usernameTxt.getText() + ", Date: " + LocalDateTime.now().toLocalDate() + 
                 ", Time: " + LocalDateTime.now().toLocalTime() + ", Success?: " + success + "\n";
-        String path = "/Users/scott/NetBeansProjects/DBClientAppV4/login_activity.txt";
-        
-        System.out.println("hi");
+        String path = "./login_activity.txt";
         try (FileWriter writer = new FileWriter(path, true)) {
             writer.write(attempt);
         } catch (IOException e) {
@@ -133,24 +131,19 @@ public class LoginController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        System.out.println(Locale.getDefault());
-        try
-        {
-           ResourceBundle rb = ResourceBundle.getBundle("dbclientappv4/Nat", Locale.getDefault());
-           if(Locale.getDefault().getLanguage().equals("fr"))
-            {
+        if(Locale.getDefault().getLanguage().equals("fr"))
+         {
+             try {
+                ResourceBundle rb = ResourceBundle.getBundle("dbclientappv4/Nat", Locale.getDefault());
                 usernameLbl.setText(rb.getString("Username"));
                 passwordLbl.setText(rb.getString("Password"));
                 locationLbl.setText(rb.getString("Location"));
                 loginLbl.setText(rb.getString("Login"));
                 loginBtn.setText(rb.getString("Login"));
                 userLocationLbl.setText("Montréal, QC");
-            } 
-        }
-        catch (MissingResourceException e)
-        {
+             } catch (MissingResourceException e) {}
+         } else {
             String tz = ZoneId.systemDefault().toString();
-            System.out.println(tz);
             if (tz.equals("America/New_York"))
             {
                 userLocationLbl.setText("White Plains, NY");
@@ -164,7 +157,5 @@ public class LoginController implements Initializable {
                 userLocationLbl.setText("London, England");
             }
         }
-        
     }
-
 }

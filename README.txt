@@ -13,7 +13,7 @@ IDE: Apache Netbeans 17
 JDK: 20
 JavaFX: 20.0.2
 Instructions: Launch Netbeans, Open the project, Navigate to the java class "DBClientAppV4.java" in
-the SRC folder, Run the program. 
+DBClientAppV4/src/dbclientappv4/DBClientAppV4.java, Run the program. 
 Description of additional report A3f: Calculates the total number of customers from each country. 
 MySQL Connector driver version: mysql-connector-j-8.0.33
 Javadoc: DBClientAppV4/dist/javadoc/index.html
